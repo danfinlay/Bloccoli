@@ -2,8 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script type="text/javascript" src="./blockly/blockly_uncompressed.js"></script>
+    <script type="text/javascript" src="./blockly/blockly_compressed.js"></script>
     <script type="text/javascript" src="./blockly/en_compressed.js"></script>
+     <script type="text/javascript" src="./js/bundle.js"></script>
 
     <style>
       html, body {
@@ -14,33 +15,29 @@
         height: 100%;
       }
       .blocklySvg {
-        height: 100%;
-        width: 100%;
       }
     </style>
-    <script>
+
+    
+  </head>
+  <body>
+    
+  </body>
+  <script>
       function init() {
+
         Blockly.inject(document.body,
-            {
-              path: './blockly/',
-              toolbox: document.getElementById('toolbox'),
-              readOnly: false,
-              trashcan: true
-            });
+          {
+            path: './blockly/',
+            toolbox: document.getElementById('toolbox'),
+            readOnly: false,
+            trashcan: true,
+            toolbox: window.blocklyToolbox
+          });
         // Let the top-level application know that Blockly is ready.
         window.parent.blocklyLoaded(Blockly);
+
       }
+      init();
     </script>
-  </head>
-  <body onload="init()">
-    <xml id="toolbox" style="display: none">
-      <block type="controls_if"></block>
-      <block type="controls_repeat_ext"></block>
-      <block type="logic_compare"></block>
-      <block type="math_number"></block>
-      <block type="math_arithmetic"></block>
-      <block type="text"></block>
-      <block type="text_print"></block>
-    </xml>
-  </body>
 </html>

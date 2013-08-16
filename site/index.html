@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <!-- This script is to enable LiveReload, remove in production: -->
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+     <script type="text/javascript" src="./js/bundle.js">
+     </script>
+      <script>
+      function blocklyLoaded(blockly) {
+        // Called once Blockly is fully loaded.
+        window.Blockly = blockly;
+      }
+    </script>
+  </head>
+  <body>
+  <iframe id="blocklyFrame" src="./frame.html"></iframe>
+  </body>
+
+</html>

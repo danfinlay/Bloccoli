@@ -1,0 +1,26 @@
+{
+  "name": "Bloccoli",
+  "version": "2.0.0",
+  "description": "A visual programming editor that compiles to javascript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js",
+    "start": "browserify index.js -o site/js/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://www.github.com/flyswatter/broccoli2"
+  },
+  "keywords": [
+    "visual",
+    "programming",
+    "editor"
+  ],
+  "author": "Dan Finlay <dan@danfinlay.com>",
+  "license": "Apache 2.0",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "watchify": "~0.1.0"
+  }
+}

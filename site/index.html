@@ -2,6 +2,7 @@
 <html>
   <head>
 
+    <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css">
 
     <!-- This script is to enable LiveReload, remove in production: -->
     <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
@@ -17,16 +18,32 @@
   </head>
 
   <body>
+
+
+    <div class="modal hide fade" id="addBlocksDialog">
+      <div class="modal-header">
+        <h3>Add new blocks to your project!</h3>
+        
+      </div>
+      Enter a block-set URL below, or click <a href="./blocks">here</a> to find blocks.<br>
+      <input type="text" placeholder="Block Address" id="blojuleAddressField" style="width:70%">
+      <div class="modal-footer">
+        <button class="btn" id="addBlojule">Add</button><button class="btn" data-dismiss="modal"  id="cancel">Cancel</button>
+      </div>
+    </div>
+
     <h1 id="logo">
       <img src="./img/logo-small.png">
       Bloccoli
     </h1>
 
     <menu>
+
+
     <a href="#" id="addBlocksButton">
      <li>
-      Add Blocks 
-      <img src="./img/add-icon.png">
+        Add Blocks 
+        <img src="./img/add-icon.png">
      </li>
      </a>
 

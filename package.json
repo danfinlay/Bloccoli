@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "test.js",
-    "start": "browserify index.js -o site/js/bundle.js"
+    "build": "browserify index.js -o site/js/bundle.js",
+    "start": "http-server"
   },
   "repository": {
     "type": "git",

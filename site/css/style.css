@@ -4,11 +4,15 @@ body{
   margin:0px;
   font-family:Helvetica, Arial, sans-serif;
 }
+h1{
+  margin:5px;
+}
 #blocklyFrame{
   width:100%;
-  height:90%;
+  height:85%;
   border:none;
   padding:0px;
+  margin:0px;
 }
 #logo{
   padding-left:15px;
@@ -17,4 +21,26 @@ body{
 #logo img{
   position:absolute; 
   right:15px;
+}
+menu{
+  padding:0px;margin:0px;
+}
+menu a{
+  text-decoration: none;
+  color:black;
+}
+menu li{
+  list-style-type: none;
+  background-color:#ccc;
+  text-decoration: none
+  margin:0px 5px 0px 3px;
+  padding:10px;
+  display:inline-block;
+  border-radius:5px 5px 0px 0px;
+}
+menu li:hover{
+  background-color:#ddd;
+}
+menu li img{
+  margin-bottom:-4px;
 }

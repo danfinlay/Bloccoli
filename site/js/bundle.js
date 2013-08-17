@@ -1,14 +1,28 @@
 ;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-// window.onload = function() {
-//   window.Blockly.injectWorkspace({injectStyles: true})
-// }
-
 var toolBoxGen = require('./lib/toolBoxGen')();
+var clickHandler = require('./lib/clickHandler')();
+
+
+//Generate toolbox:
+
 toolBoxGen.generateToolbox();
 window.blocklyToolbox = toolBoxGen.toolbox;
-},{"./lib/toolBoxGen":2}],2:[function(require,module,exports){
+
+
+},{"./lib/clickHandler":2,"./lib/toolBoxGen":3}],2:[function(require,module,exports){
+
+module.exports = function(){
+
+  $(window.parent.document).find('#runButton').on('click', function(e){
+    e.preventDefault();
+    console.log("Run clicked");
+    var code = window.Blockly.Generator.workspaceToCode('JavaScript');
+    console.log("Code generated: "+code);
+  });
+
+}
+},{}],3:[function(require,module,exports){
 module.exports = function(options){
-  console.log("New generator requested")
   return new ToolBoxGenerator(options);
 }
 

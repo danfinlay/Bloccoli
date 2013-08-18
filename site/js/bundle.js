@@ -1,16 +1,20 @@
 ;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var toolBoxGen = require('./lib/toolBoxGen')();
+var urlHandler = require('./lib/urlHandler')();
+console.log("URl handler: "+urlHandler);
 var clickHandler = require('./lib/clickHandler')(toolBoxGen);
-
 //Generate toolbox:
+
 
 toolBoxGen.generateToolbox();
 window.blocklyToolbox = toolBoxGen.toolbox;
-},{"./lib/clickHandler":2,"./lib/toolBoxGen":4}],2:[function(require,module,exports){
+
+},{"./lib/clickHandler":2,"./lib/toolBoxGen":4,"./lib/urlHandler":5}],2:[function(require,module,exports){
 module.exports = function(toolBoxGen){
 
-  var integratorModule = require('./integrator');
+  var integratorModule = require('./integrator2');
   var integrator = integratorModule(toolBoxGen);
+  // this.urlHandler = urlHandler
 
   //Vanilla JS Way (not firing):
   // var runButton = window.parent.document.querySelector('#runButton');
@@ -27,28 +31,12 @@ module.exports = function(toolBoxGen){
     console.log("Attempting modal");
     $(window.parent.document).find("#addBlocksDialog").modal();
   });
-  
-  $(window.parent.document).find('#addBlojule').on('click', function(e){
-    e.preventDefault();
-    var url = $(window.parent.document).find("#blojuleAddressField").val();
-    console.log("Making request...");
-    $.ajax({
-      url:url,
-    }).done(function(data){
-      
-      integrator.integrate(data);
-
-    }).fail(function(er){
-      alert("Error: "+JSON.stringify(er));
-    }).always(function(){
-      $(window.parent.document).find("#addBlocksDialog").modal('hide');
-    })
-  });
 
   $(window.parent.document).find('#runButton').on('click', function(e){
     e.preventDefault();
     var code = window.Blockly.Generator.workspaceToCode('JavaScript');
     console.log("Code generated: "+code);
+    eval(code);
   });
 
   $(window.parent.document).find('#shareButton').on('click', function(e){
@@ -56,10 +44,22 @@ module.exports = function(toolBoxGen){
     var code = window.Blockly.Generator.workspaceToCode('JavaScript');
   });
 
-  
+ 
+  function getUrlVars()
+  {
+      var vars = [], hash;
+      var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+      for(var i = 0; i < hashes.length; i++)
+      {
+          hash = hashes[i].split('=');
+          vars.push(hash[0]);
+          vars[hash[0]] = hash[1];
+      }
+      return vars;
+  }  
 
 }
-},{"./integrator":3}],3:[function(require,module,exports){
+},{"./integrator2":3}],3:[function(require,module,exports){
 module.exports = function(toolBoxGen){
   return new Integrator(toolBoxGen);
 }
@@ -69,7 +69,10 @@ var Integrator = function(toolBoxGen){
 }
 
 Integrator.prototype.integrate = function(data){
-  console.log("About to eval object");
+  console.log("About to eval: "+data);
+
+  // var LanguageEnhancer = eval(data);
+  // console.log("It's a "+typeof LanguageEnhancer);
   var newObject = eval(data);
   console.log("Object evaluated: "+JSON.stringify(newObject));
   var blockList = [];
@@ -242,6 +245,76 @@ function generateBasicBlocks(){
     }
   ];
 
+}
+},{}],5:[function(require,module,exports){
+
+
+function UrlHandler(){
+  this.getUrlVars = getUrlVars;
+  this.updateExtensions = updateExtensions;
+  this.reloadPageWithExtensions = reloadPageWithExtensions;
+  this.reloadPageWithExtension = reloadPageWithExtension;
+
+  var handler = this;
+  $(window.parent.document).find('#addBlojule').on('click', function(e){
+
+    e.preventDefault();
+    var blojuleAddress = $(window.parent.document).find("#blojuleAddressField").val();
+    handler.reloadPageWithExtension(blojuleAddress);
+
+  });
+}
+
+// UrlHandler.prototype.getUrlVars = getUrlVars;
+
+function getUrlVars()
+{
+    var vars = [], hash;
+    var source = document.referrer;
+    var hashes = source.slice(source.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+// UrlHandler.prototype.updateExtensions = updateExtensions;
+function updateExtensions(){
+  var urlVals = getUrlVars();
+  console.log("URL vals: "+JSON.stringify(urlVals));
+  if(urlVals.bloccoliExtensions){
+    window.bloccoliExtensions = eval(unescape(urlVals.bloccoliExtensions));
+    console.log("Saved extensions: "+JSON.stringify(window.bloccoliExtensions));
+  }
+}
+
+function reloadPageWithExtensions(){
+  var newUrl = './';
+  if(window.bloccoliExtensions){
+    newUrl+='?bloccoliExtensions='+escape(JSON.stringify(window.bloccoliExtensions));
+  }
+  window.parent.location.href = newUrl;
+}
+
+function reloadPageWithExtension(newExtensionUrl){
+  var newUrl = './';
+  if(window.bloccoliExtensions){
+    window.bloccoliExtensions.push(newExtensionUrl)
+  }else{
+    window.bloccoliExtensions = [newExtensionUrl];
+  }
+  reloadPageWithExtensions();
+}
+
+module.exports = function(){
+  console.log("Initializing url handler.");
+  var result = new UrlHandler();
+  result.updateExtensions();
+  // console.log("Extension urls embedded: "+JSON.stringify(window.bloccoliExtensions));
+  return result;
 }
 },{}]},{},[1])
 ;

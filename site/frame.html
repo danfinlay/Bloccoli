@@ -11,6 +11,7 @@
     <script type="text/javascript" src="./blockly/blockly_compressed.js"></script>
     <script type="text/javascript" src="./blockly/javascript_compressed.js"></script>
     <script type="text/javascript" src="./blockly/en_compressed.js"></script>
+    <script type="text/javascript" src="./blockly/appengine/storage.js"></script>
      <script type="text/javascript" src="./js/bundle.js"></script>
 
     <style>
@@ -30,8 +31,30 @@
   <body>
     
   </body>
+
+  <script id="frameInitScript">
+
+  </script>
   <script>
       function init() {
+
+        // Blockly.Language.browser_alert = {
+        //   helpUrl: 'http://www.example.com/',
+        //   init: function() {
+        //     this.setColour(210);
+        //     this.setPreviousStatement(true);
+        //     this.setNextStatement(true);
+        //     this.appendValueInput("alertText").setCheck("String").appendTitle("alert");
+        //     this.setTooltip('');
+        //   }
+        // };
+
+        // Blockly.JavaScript.browser_alert = function() {
+        //   var value_alerttext = Blockly.JavaScript.valueToCode(this, 'alertText', Blockly.JavaScript.ORDER_ATOMIC);
+        //   // TODO: Assemble JavaScript into code variable.
+        //   var code = 'alert('+value_alerttext+')';
+        //   return code;
+        // }
 
         Blockly.inject(document.body,
           {

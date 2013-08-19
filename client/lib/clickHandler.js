@@ -1,7 +1,6 @@
-module.exports = function(toolBoxGen){
+var pageGen = require('./pageGenerator');
 
-  var integratorModule = require('./integrator2');
-  var integrator = integratorModule(toolBoxGen);
+module.exports = function(toolBoxGen){
 
   //Add blocks modal launcher:
   $(window.parent.document).find('#addBlocksButton').on('click', function(e){
@@ -25,8 +24,10 @@ module.exports = function(toolBoxGen){
     }
     e.preventDefault();
     var code = window.Blockly.Generator.workspaceToCode('JavaScript');
-    console.log("Code generated: "+code);
-    eval(code);
+    var generatedPage = pageGen(code);
+
+    window.parent.subFrameFromHtml(generatedPage);
+
   });
 
   $(window.parent.document).find('#shareButton').on('click', function(e){

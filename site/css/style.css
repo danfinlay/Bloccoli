@@ -11,16 +11,19 @@ h1{
   color:white;
   font-family: 'Mouse Memoirs', sans-serif;
 }
+.lead{
+  font-family:'courier';
+}
 #blocklyFrame{
-  width:100%;
+  width:55%;
   height:85%;
   border:none;
   padding:0px;
   margin:0px;
 }
 #runFrame{
-  height:85%;
- width:49%;
+ height:85%;
+ width:43%;
  margin:0px;
  padding:0px;
  border:none;

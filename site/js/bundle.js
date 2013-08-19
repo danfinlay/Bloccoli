@@ -10,10 +10,9 @@ toolBoxGen.generateToolbox();
 window.parent.blocklyXMLToolbox = toolBoxGen.toolbox;
 
 },{"./lib/clickHandler":2,"./lib/toolBoxGen":4,"./lib/urlHandler":5}],2:[function(require,module,exports){
-module.exports = function(toolBoxGen){
+var pageGen = require('./pageGenerator');
 
-  var integratorModule = require('./integrator2');
-  var integrator = integratorModule(toolBoxGen);
+module.exports = function(toolBoxGen){
 
   //Add blocks modal launcher:
   $(window.parent.document).find('#addBlocksButton').on('click', function(e){
@@ -37,8 +36,10 @@ module.exports = function(toolBoxGen){
     }
     e.preventDefault();
     var code = window.Blockly.Generator.workspaceToCode('JavaScript');
-    console.log("Code generated: "+code);
-    eval(code);
+    var generatedPage = pageGen(code);
+
+    window.parent.subFrameFromHtml(generatedPage);
+
   });
 
   $(window.parent.document).find('#shareButton').on('click', function(e){
@@ -47,54 +48,33 @@ module.exports = function(toolBoxGen){
   });
 
 }
-},{"./integrator2":3}],3:[function(require,module,exports){
-module.exports = function(toolBoxGen){
-  return new Integrator(toolBoxGen);
-}
+},{"./pageGenerator":3}],3:[function(require,module,exports){
+module.exports = function(generatedJS){
 
-var Integrator = function(toolBoxGen){
-  this.toolBoxGen = toolBoxGen;
-}
+  window.parent.blocklyToolbox;
 
-Integrator.prototype.integrate = function(data){
-  console.log("About to eval: "+data);
+  var result = '<!doctype html><html><head><title>Blockly Project</title>';
 
-  // var LanguageEnhancer = eval(data);
-  // console.log("It's a "+typeof LanguageEnhancer);
-  var newObject = eval(data);
-  console.log("Object evaluated: "+JSON.stringify(newObject));
-  var blockList = [];
+  //Add in dependencies.
+  for(var i = 0, len = window.parent.blocklyToolbox.length; i < len; i++){
+    if(window.parent.blocklyToolbox[i].scripts){
+      for(var s = 0, sLen = window.parent.blocklyToolbox[i].scripts.length; s < sLen; s++){
 
-  //Retrieve language:
-  if(typeof newObject.Language === 'object'){
-    for(block in newObject.Language){
-      console.log("Now trying to set language "+block+" of "+window.Blockly.Language+' to '+newObject.Language[block]);
-      window.Blockly.Language[block] = newObject.Language[block];
-      blockList.push(block);
+        result += '<script src="' + window.parent.blocklyToolbox[i].scripts[s] + '"></script>';
+
+      }
     }
   }
 
-  //Retrieve generators:
-  if(typeof newObject.Javascript === 'object'){
-    for(block in newObject.Javascript){
-      window.Blockly.Javascript[block] = newObject.Javascript[block];
-    }
-  }
+  result += '</head><body></body>';
 
-  this.toolBoxGen.categories.push({
-    name:newObject.name,
-    blocks:blockList
-  })
+  //Add in generated script.
+  result += '<script>' + generatedJS + '</script>';
 
-  window.blocklyToolbox = this.toolBoxGen.generateToolbox();
+  result += '</html>';
 
-  Blockly.inject(document.body,
-  {
-    path: './blockly/',
-    readOnly: false,
-    trashcan: true,
-    toolbox: window.blocklyToolbox
-  });
+  return result;
+
 }
 },{}],4:[function(require,module,exports){
 module.exports = function(options){

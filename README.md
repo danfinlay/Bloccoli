@@ -46,9 +46,19 @@ When the server finds this array in an iframe request (always for ./site/frame.h
 
 For this reason, calls to Blockly made in modules are pure pre-injection Blockly interactions.  In fact, they're all fairly unrestricted javascript, except that before I allow public uploading of modules, I'll be sanitizing the submitted Javascript automatically.
 
-However, injecting dependencies for the block-generated code itself is not yet concretely defined.
+Injecting dependencies for the blocks' generated code should be done in the block module like so:
 
-For people familiar to blockly, the only strange part may be the Javascript object that represents the menu item and its member names, but once you notice that I'm just using that JSON object to generate the menu XML used by blockly, you'll realize I just thought it was a simpler API, and hopefully you'll agree.  If I get some good arguments for why it isn't, maybe I'll switch to XML.  I'm not looking forward to that if it's the case.  Better early than late, though.
+    window.parent.blocklyToolbox.push({
+      name:'Sample Module',
+      blocks:['uniquePrefix_blockId', 'uniquePrefix_otherBlock', 'uniquePrefix_etc'],
+      //Any required javascript should be linked here:
+      scripts:[
+        'http://www.site-that-permits-cross-domain-requests.com/dependency1.js',
+        'http://www.other-site-that-permits-cross-domain-requests.com/dependency2.js'
+      ]
+    });
+
+This function must be called for bloccoli to list the module's blocks in the menu.  The blockly menu xml is generated from this javascript object.
 
 ####Client
 Bundled using Browserify.  Bundle any updates from the root via:

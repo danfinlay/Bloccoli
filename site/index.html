@@ -15,26 +15,13 @@
 
   <body>
 
-    <div class="modal hide fade" id="addBlocksDialog">
-      <div class="modal-header">
-        <h3>Add new blocks to your project!</h3>
-        
-      </div>
-      Enter a block module name to add its blocks to your toolbar!<br>
-      <input type="text" placeholder="Block Address" id="blojuleAddressField" style="width:70%">
-      <div class="modal-footer">
-        Currently only "browser" is a valid module name.<br>
-        <button class="btn btn-primary" id="addBlojule">Add</button><button class="btn" data-dismiss="modal"  id="cancel">Cancel</button>
-      </div>
-    </div>
-
     <h1 id="logo">
       <img src="./img/logo-small.png">
       Bloccoli
+
+      <p class="lead">Import custom blocks to program anything!</p>
     </h1>
-
     <menu>
-
 
     <a href="#" id="addBlocksButton">
      <li>
@@ -44,6 +31,18 @@
       </div>
      </li>
      </a>
+
+      <div class="modal hide fade" id="addBlocksDialog">
+        <div class="modal-header">
+          <h3>Add new blocks to your project!</h3>
+        </div>
+        Enter a block module name to add its blocks to your toolbar!<br>
+        <input type="text" placeholder="Block Address" id="blojuleAddressField" style="width:70%">
+        <div class="modal-footer">
+          Currently only "browser" is a valid module name.<br>
+          <button class="btn btn-primary" id="addBlojule">Add</button><button class="btn" data-dismiss="modal"  id="cancel">Cancel</button>
+        </div>
+      </div>
 
      <a href="#" id="runButton">
      <li>
@@ -68,6 +67,19 @@
     </a>
     </menu>
     <script>
+
+    window.subFrameFromHtml = function(){
+      var previewFrameShowing = false;
+
+      return function(html){
+        if(document.getElementById('runFrame')) document.getElementById('runFrame').remove();
+        var iframe = document.createElement('iframe');
+        iframe.id = "runFrame";
+        iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+        document.body.appendChild(iframe);
+      }
+
+    }();
 
     //JSON representation:
     var blocklyToolbox = [];
@@ -99,8 +111,11 @@
       iframe.setAttribute('src', frameUrl);
       iframe.setAttribute('id', 'blocklyFrame');
       document.body.appendChild(iframe);
-      // $('body').append('<iframe id="blocklyFrame" src="'+frameUrl+'"></iframe>')
+
     </script>
+
+    <iframe id = "runFrame">
+    </iframe>
   </body>
 
 </html>

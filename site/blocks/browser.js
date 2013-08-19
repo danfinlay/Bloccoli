@@ -1,4 +1,4 @@
-blocklyToolbox.push({
+window.parent.blocklyToolbox.push({
   name:'Browser',
   blocks:['browser_alert']
 });

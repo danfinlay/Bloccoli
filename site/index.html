@@ -57,10 +57,16 @@
     </a>
     </menu>
     <script>
+
+    //JSON representation:
+    var blocklyToolbox = [];
+    //XML Prepared for Blockly:
+    var blocklyXMLToolbox = '';
+
       function getUrlVars()
       {
           var vars = [], hash;
-          var source = document.referrer;
+          var source = window.location.href;
           var hashes = source.slice(source.indexOf('?') + 1).split('&');
           for(var i = 0; i < hashes.length; i++)
           {
@@ -73,9 +79,11 @@
 
       var urlVars = getUrlVars();
       var frameUrl = './frame.html';
-      if(urlVars.broccoliExtensions){
-        frameUrl+='?broccoliExtensions='+urlVars.broccoliExtensions
+      if(urlVars.bloccoliExtensions){
+        frameUrl+='?bloccoliExtensions='+urlVars.bloccoliExtensions
       }
+
+      console.log("Iframe requesting with: "+frameUrl);
       var iframe = document.createElement('IFRAME');
       iframe.setAttribute('src', frameUrl);
       iframe.setAttribute('id', 'blocklyFrame');

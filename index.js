@@ -6,4 +6,4 @@ var clickHandler = require('./lib/clickHandler')(toolBoxGen);
 
 
 toolBoxGen.generateToolbox();
-window.blocklyToolbox = toolBoxGen.toolbox;
+window.parent.blocklyXMLToolbox = toolBoxGen.toolbox;

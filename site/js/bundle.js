@@ -7,7 +7,7 @@ var clickHandler = require('./lib/clickHandler')(toolBoxGen);
 
 
 toolBoxGen.generateToolbox();
-window.blocklyToolbox = toolBoxGen.toolbox;
+window.parent.blocklyXMLToolbox = toolBoxGen.toolbox;
 
 },{"./lib/clickHandler":2,"./lib/toolBoxGen":4,"./lib/urlHandler":5}],2:[function(require,module,exports){
 module.exports = function(toolBoxGen){
@@ -114,7 +114,7 @@ module.exports = function(options){
 };
 
 var ToolBoxGenerator = function(options){
-  this.categories = [];
+  window.parent.blocklyToolbox = [];
   generateBasicBlocks.call(this);
 
   this.toolbox = '';
@@ -124,10 +124,10 @@ ToolBoxGenerator.prototype.generateToolbox = generateToolbox;
 
 function generateToolbox(){
   var newXml = '<xml id="toolbox">';
-  for(var i = 0, iLen = this.categories.length; i < iLen; i++){
-    newXml += '<category name="'+this.categories[i].name+'">';
-    for(var b = 0, bLen = this.categories[i].blocks.length; b < bLen; b++){
-      newXml += '<block type="'+this.categories[i].blocks[b]+'"></block>';
+  for(var i = 0, iLen = window.parent.blocklyToolbox.length; i < iLen; i++){
+    newXml += '<category name="'+window.parent.blocklyToolbox[i].name+'">';
+    for(var b = 0, bLen = window.parent.blocklyToolbox[i].blocks.length; b < bLen; b++){
+      newXml += '<block type="'+window.parent.blocklyToolbox[i].blocks[b]+'"></block>';
     }
     newXml += '</category>';
   }
@@ -141,7 +141,7 @@ function xmlForCategory(category){
 }
 
 function generateBasicBlocks(){
-  this.categories = [
+  window.parent.blocklyToolbox = [
     {
       name:"Logic",
       blocks:[

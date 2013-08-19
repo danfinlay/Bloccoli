@@ -12,12 +12,13 @@ http.createServer(function(req, res){
   var path = parsedReq.pathname.split('/');
   var filename = path[path.length-1];
 
-  console.log("Query: "+path);
-  console.log("Path: "+ JSON.stringify(path) +" queries: "+JSON.stringify(queries));
+  // console.log("request url: "+req.url);
+  // console.log("Query: "+path);
+  // console.log("Path: "+ JSON.stringify(path) +" queries: "+JSON.stringify(queries));
   // if(filename === 'frame.html') console.log("Frame arguments: "+JSON.stringify(queries));
   // console.log(queries);
 
-  if(filename === 'frame.html' && queries && queries.bloccoliExtensions){
+  if(path[1] === 'frame.html' && queries && queries.bloccoliExtensions){
     console.log("Frame with arguments recognized.");
     var extensions = eval(unescape(queries.bloccoliExtensions));
 
@@ -25,6 +26,7 @@ http.createServer(function(req, res){
     extensionTrumpet.selectAll('#frameInitScript', function(elem){
       var writeOutStream = elem.createWriteStream();
       for(var i = 0; i < extensions.length; i++){
+        console.log("Piping out module.");
         fs.createReadStream(__dirname + '/../site/blocks/'+extensions[i]+'.js').pipe(writeOutStream);
       }
     });

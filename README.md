@@ -10,7 +10,7 @@ Allows new modules full of javascript-compiling blocks to be added to its projec
 
 If you'd like to add modules to Bloccoli, simply add them to the ./site/blocks folder.
 
-Follow the browser.js format for success.  Note there are three steps:
+Follow the [browser.js format](https://github.com/flyswatter/Bloccoli/blob/master/site/blocks/browser.js) for success.  Note there are three steps:
 
 Add a simple object representation of your module name and block names to the `window.parent.blocklyToolbox` list [as seen here](https://github.com/flyswatter/Bloccoli/blob/master/site/blocks/browser.js#L1).
 

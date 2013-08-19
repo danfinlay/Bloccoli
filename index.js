@@ -31,16 +31,16 @@ http.createServer(function(req, res){
       var writeOutStream = elem.createWriteStream();
       for(var i = 0; i < extensions.length; i++){
         console.log("Piping out module.");
-        fs.createReadStream(__dirname + '/../site/blocks/'+extensions[i]+'.js').pipe(writeOutStream);
+        fs.createReadStream(__dirname + './site/blocks/'+extensions[i]+'.js').pipe(writeOutStream);
       }
     });
 
-    fs.createReadStream(__dirname+'/../site/frame.html')
+    fs.createReadStream(__dirname+'./site/frame.html')
     .pipe(extensionTrumpet).pipe(res);
 
   }else{
     // console.log("Ecstatic taking over");
-    ecstatic({root: __dirname+'/../site/', handleError:false})(req, res);
+    ecstatic({root: __dirname+'./site/', handleError:false})(req, res);
   }
 
 

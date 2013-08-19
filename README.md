@@ -34,4 +34,13 @@ A node.js program.  It exists in the "blockServer" folder.  From there, just run
 
     $ node index.js
 
-At the moment, the app is a basic ol' blockly instance, EXCEPT if you click "Add Blocks", and enter a valid module name, that module and its blocks will be added to the block menu on the left.
+####Current design:
+The current app flow is fairly straightforward:  
+
+Requesting a module adds it to an escaped JSON array as a "bloccoliExtensions" URL query.
+
+The server parses out this array, and looks for .js files with the requested module names, and pipes their contents into the frame.html file's "frameInitScript" script tag.
+
+Calls to Blockly made in modules are pure pre-injection Blockly interactions.
+
+For people familiar to blockly, the only strange part may be the Javascript object that represents the menu item and its member names, but once you notice that I'm just using that JSON object to generate the menu XML used by blockly, you'll realize I just thought it was a simpler API, and hopefully you'll agree.  If I get some good arguments for why it isn't, maybe I'll switch to XML.  I'm not looking forward to that if it's the case.  Better early than late, though.

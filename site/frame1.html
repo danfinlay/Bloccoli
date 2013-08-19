@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css">
+
+    <script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="./blockly/javascript_compressed.js"></script>
+    <script type="text/javascript" src="./blockly/en_compressed.js"></script>
+    <script type="text/javascript" src="./blockly/appengine/storage.js"></script>
+     <script type="text/javascript" src="./js/bundle.js"></script>
+
+    <style>
+      html, body {
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        height: 100%;
+      }
+      .blocklySvg {
+      }
+    </style>
+    
+  </head>
+  <body>
+    
+  </body>
+  <script id = "defaultInitBlocks">
+  window.parent.blocklyToolbox = [
+    {
+      name:"Logic",
+      blocks:[
+        "controls_if",
+        "logic_compare",
+        "logic_operation",
+        "logic_negate",
+        "logic_boolean",
+        "logic_null",
+        "logic_ternary"
+      ]
+    },
+    {
+      name:"Loops",
+      blocks:[
+        "controls_repeat",
+        "controls_repeat_ext",
+        "controls_whileUntil",
+        "controls_for",
+        "controls_forEach",
+        "controls_flow_statements"
+      ]
+    },
+    {
+      name:"Math",
+      blocks:[
+        "math_number",
+        "math_arithmetic",
+        "math_single",
+        "math_constant",
+        "math_number_property",
+        "math_change",
+        "math_on_list",
+        "math_modulo",
+        "math_constrain",
+        "math_random_int",
+        "math_random_float"
+      ]
+    },
+    {
+      name:"Text",
+      blocks:[
+        "text_join",
+        "text_append",
+        "text_length",
+        "text_isEmpty",
+        "text_indexOf",
+        "text_charAt",
+        "text_getSubstring",
+        "text_changeCase",
+        "text_trim",
+        "text_print",
+        "text_prompt"
+      ]
+    },
+    {
+      name:"Lists",
+      blocks:[
+        "lists_create_empty",
+        "lists_create_with",
+        "lists_repeat",
+        "lists_length",
+        "lists_isEmpty",
+        "lists_indexOf",
+        "lists_getIndex",
+        "lists_setIndex",
+        "lists_getSublist"
+      ]
+    },
+    {
+      name:"Color",
+      blocks:[
+        "colour_picker",
+        "colour_random",
+        "colour_rgb",
+        "colour_blend"
+      ]
+    },
+    {
+      name:"Variables",
+      blocks:[
+        "variables_get",
+        "variables_set",
+        "lists_create_empty",
+        "lists_create_with",
+        "lists_repeat",
+        "lists_length",
+        "lists_isEmpty",
+        "lists_indexOf",
+        "lists_getIndex",
+        "lists_setIndex",
+        "lists_getSublist"
+      ]
+    },
+    {
+      name:"Functions",
+      blocks:[
+        "procedures_defreturn",
+        "procedures_ifreturn"
+      ]
+    }
+  ];
+  </script>

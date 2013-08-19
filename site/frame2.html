@@ -1,0 +1,36 @@
+ <script>
+
+
+      function generateToolbox(){
+        var newXml = '<xml id="toolbox">';
+        for(var i = 0, iLen = window.parent.blocklyToolbox.length; i < iLen; i++){
+          newXml += '<category name="'+window.parent.blocklyToolbox[i].name+'">';
+          for(var b = 0, bLen = window.parent.blocklyToolbox[i].blocks.length; b < bLen; b++){
+            newXml += '<block type="'+window.parent.blocklyToolbox[i].blocks[b]+'"></block>';
+          }
+          newXml += '</category>';
+        }
+        newXml += '</xml>';
+        window.parent.blocklyXMLToolbox = newXml;
+        return newXml;
+      }
+
+
+      function init() {
+
+
+
+        Blockly.inject(document.body,
+          {
+            path: './blockly/',
+            readOnly: false,
+            trashcan: true,
+            toolbox: generateToolbox()
+          });
+        // Let the top-level application know that Blockly is ready.
+        window.parent.blocklyLoaded(Blockly);
+
+      }
+      init();
+    </script>
+</html>

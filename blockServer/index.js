@@ -6,6 +6,9 @@ var through = require('through');
 var trumpet = require('trumpet');
 var _ = require('underscore');
 
+var port = process.env.PORT || 8082;
+console.log("Starting up on port "+port);
+
 http.createServer(function(req, res){
 
   var parsedReq = url.parse(req.url,true);
@@ -46,4 +49,4 @@ http.createServer(function(req, res){
   // fs.createReadStream('./blocks/alert.js').pipe(res);
 
 
-}).listen(8082);
+}).listen(port);

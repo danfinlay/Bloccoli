@@ -11,6 +11,7 @@
   "dependencies": {
     "ecstatic": "~0.4.7",
     "through": "~2.3.4",
-    "trumpet": "~1.5.5"
+    "trumpet": "~1.5.5",
+    "underscore": "~1.5.1"
   }
 }

@@ -4,6 +4,7 @@ var url = require('url');
 var ecstatic = require('ecstatic');
 var through = require('through');
 var trumpet = require('trumpet');
+var _ = require('underscore');
 
 http.createServer(function(req, res){
 
@@ -20,7 +21,7 @@ http.createServer(function(req, res){
 
   if(path[1] === 'frame.html' && queries && queries.bloccoliExtensions){
     console.log("Frame with arguments recognized.");
-    var extensions = eval(unescape(queries.bloccoliExtensions));
+    var extensions = _.uniq(eval(unescape(queries.bloccoliExtensions)));
 
     var extensionTrumpet = trumpet();
     extensionTrumpet.selectAll('#frameInitScript', function(elem){

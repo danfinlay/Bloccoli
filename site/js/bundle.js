@@ -14,25 +14,27 @@ module.exports = function(toolBoxGen){
 
   var integratorModule = require('./integrator2');
   var integrator = integratorModule(toolBoxGen);
-  // this.urlHandler = urlHandler
 
-  //Vanilla JS Way (not firing):
-  // var runButton = window.parent.document.querySelector('#runButton');
-  // runButton.addEventListener('onclick', function(e){
-  //   e.preventDefault();
-  //   var code = window.Blockly.Generator.workspaceToCode('JavaScript');
-  //   console.log("Run2 clicked");
-  // })
-
-
-  //jQuery way:
+  //Add blocks modal launcher:
   $(window.parent.document).find('#addBlocksButton').on('click', function(e){
     e.preventDefault();
     console.log("Attempting modal");
     $(window.parent.document).find("#addBlocksDialog").modal();
   });
 
+  //Run code:
+  var running = false;
   $(window.parent.document).find('#runButton').on('click', function(e){
+
+    if(running){
+      running = false;
+      $(window.parent.document).find('#runButton .run').show();
+      $(window.parent.document).find('#runButton .stop').hide();
+    }else{
+      running = true;
+      $(window.parent.document).find('#runButton .run').hide();
+      $(window.parent.document).find('#runButton .stop').show();
+    }
     e.preventDefault();
     var code = window.Blockly.Generator.workspaceToCode('JavaScript');
     console.log("Code generated: "+code);
@@ -43,20 +45,6 @@ module.exports = function(toolBoxGen){
     e.preventDefault();
     var code = window.Blockly.Generator.workspaceToCode('JavaScript');
   });
-
- 
-  function getUrlVars()
-  {
-      var vars = [], hash;
-      var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-      for(var i = 0; i < hashes.length; i++)
-      {
-          hash = hashes[i].split('=');
-          vars.push(hash[0]);
-          vars[hash[0]] = hash[1];
-      }
-      return vars;
-  }  
 
 }
 },{"./integrator2":3}],3:[function(require,module,exports){

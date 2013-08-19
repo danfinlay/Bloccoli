@@ -2,6 +2,8 @@
 #Bloccoli
 ###A Modular [Blockly](http://code.google.com/p/blockly/) Programming Environment
 
+####[Live instance running here](http://bloccoli.herokuapp.com/)
+
 Building on my thoughts from [this post](https://github.com/flyswatter/Blockly-Brainstorming).
 
 Allows new modules full of javascript-compiling blocks to be added to its projects.  The basic functionality is working, now is the "adding modules" and "sanitizing the javascript" phase.  Adding modules should include adding a nice interface for browsing them.
@@ -32,6 +34,8 @@ When the main page loads with a bloccoliExtensions query array, it creates a new
 When the server finds this array in an iframe request (always for ./site/frame.html), it injects script tags pointing to the requested modules before the Blockly.inject call.
 
 For this reason, calls to Blockly made in modules are pure pre-injection Blockly interactions.  In fact, they're all fairly unrestricted javascript, except that before I allow public uploading of modules, I'll be sanitizing the submitted Javascript automatically.
+
+For this reason, any Javascript dependencies can be pasted directly into a blockly module file.
 
 For people familiar to blockly, the only strange part may be the Javascript object that represents the menu item and its member names, but once you notice that I'm just using that JSON object to generate the menu XML used by blockly, you'll realize I just thought it was a simpler API, and hopefully you'll agree.  If I get some good arguments for why it isn't, maybe I'll switch to XML.  I'm not looking forward to that if it's the case.  Better early than late, though.
 

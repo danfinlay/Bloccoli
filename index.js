@@ -20,13 +20,13 @@ http.createServer(function(req, res){
   var path = parsedReq.pathname.split('/');
   var filename = path[path.length-1];
 
-  console.log("request url: "+req.url);
-  console.log("Query: "+path);
+  // console.log("request url: "+req.url);
+  // console.log("Query: "+path);
 
   //When blockly iframe is requested, inject requested module scripts:
   if(path[1] === 'frame.html' && queries && queries.bloccoliExtensions){
 
-    console.log("Frame with arguments recognized.");
+    // console.log("Frame with arguments recognized.");
     var extensions = _.uniq(eval(unescape(queries.bloccoliExtensions)));
     res.writeHead(200);
     res.write(frame[0]);

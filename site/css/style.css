@@ -9,6 +9,7 @@ body{
 h1{
   margin:5px;
   color:white;
+  font-family: 'Mouse Memoirs', sans-serif;
 }
 #blocklyFrame{
   width:100%;
@@ -16,6 +17,14 @@ h1{
   border:none;
   padding:0px;
   margin:0px;
+}
+#runFrame{
+  height:85%;
+ width:49%;
+ margin:0px;
+ padding:0px;
+ border:none;
+ background-color:white;
 }
 #logo{
   padding-left:15px;

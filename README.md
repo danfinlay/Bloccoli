@@ -4,17 +4,21 @@
 
 Building on my thoughts from [this post](https://github.com/flyswatter/Blockly-Brainstorming).
 
+Allows new modules full of javascript-compiling blocks to be added to its projects.  The basic functionality is working, now is the "adding modules" and "sanitizing the javascript" phase.  Adding modules should include adding a nice interface for browsing them.
+
 Currently the app consists of two parts, client and server.
 
-Client is bundled using Browserify.  Bundle any updates from the root via:
+##Client
+Bundled using Browserify.  Bundle any updates from the root via:
 
-  $ browserify index.js -o site/js/bundle.js
+    $ browserify index.js -o site/js/bundle.js
 
-Server is a node.js program.  It exists in the "blockServer" folder.  Just run:
+##Server
+A node.js program.  It exists in the "blockServer" folder.  From there, just run:
 
-  $ node index.js
+    $ node index.js
 
-At the moment the app is a basic ol' blockly instance, EXCEPT if you click "Add Blocks", and enter a valid module name, that module and its blocks will be added to the block menu on the left.
+At the moment, the app is a basic ol' blockly instance, EXCEPT if you click "Add Blocks", and enter a valid module name, that module and its blocks will be added to the block menu on the left.
 
 Currently "browser" is the only valid module.  It only features an "alert" block.  But the premise is simple!  New blocks can be added casually and easily!
 

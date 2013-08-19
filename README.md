@@ -6,9 +6,20 @@
 
 Building on my thoughts from [this post](https://github.com/flyswatter/Blockly-Brainstorming).
 
-Allows new modules full of javascript-compiling blocks to be added to its projects.  The basic functionality is working, now is the "adding modules" and "sanitizing the javascript" phase.  Adding modules should include adding a nice interface for browsing them.
+Allows new modules full of javascript-compiling blocks to be added to its projects.  Basic block importing is working, major remaining tasks:
 
-Currently "browser" is the only valid module.  It only features an "alert" block.  But the premise is simple!  New blocks can be added casually and easily!
+1. Compile a website from the generated source code.  Include a prerequisite scripts section for new modules to import accessory code.
+
+1.  Decide on the exact run method.  Have a frame next to the block frame?  Pop the code up in a new window?  Something else?  Definitely provide an html-download feature.
+
+4.  Automate Javascript Sanitization.
+
+5.  Add modules.  
+
+6.  Create interface for contributing & exploring modules.
+-
+
+Currently, "browser" is the only valid module.  It only features an "alert" block.  But the premise is simple!  New blocks can be added casually and easily!
 
 ##Contributing Block Modules
 
@@ -35,7 +46,7 @@ When the server finds this array in an iframe request (always for ./site/frame.h
 
 For this reason, calls to Blockly made in modules are pure pre-injection Blockly interactions.  In fact, they're all fairly unrestricted javascript, except that before I allow public uploading of modules, I'll be sanitizing the submitted Javascript automatically.
 
-For this reason, any Javascript dependencies can be pasted directly into a blockly module file.
+However, injecting dependencies for the block-generated code itself is not yet concretely defined.
 
 For people familiar to blockly, the only strange part may be the Javascript object that represents the menu item and its member names, but once you notice that I'm just using that JSON object to generate the menu XML used by blockly, you'll realize I just thought it was a simpler API, and hopefully you'll agree.  If I get some good arguments for why it isn't, maybe I'll switch to XML.  I'm not looking forward to that if it's the case.  Better early than late, though.
 

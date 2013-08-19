@@ -5,6 +5,10 @@ var ecstatic = require('ecstatic');
 var through = require('through');
 var trumpet = require('trumpet');
 var _ = require('underscore');
+var frame = [
+    fs.readFileSync('./site/frame1.html'),
+    fs.readFileSync('./site/frame2.html')
+  ]
 
 var port = process.env.PORT || 8082;
 console.log("Starting up on port "+port);
@@ -16,37 +20,25 @@ http.createServer(function(req, res){
   var path = parsedReq.pathname.split('/');
   var filename = path[path.length-1];
 
-  // console.log("request url: "+req.url);
-  // console.log("Query: "+path);
-  // console.log("Path: "+ JSON.stringify(path) +" queries: "+JSON.stringify(queries));
-  // if(filename === 'frame.html') console.log("Frame arguments: "+JSON.stringify(queries));
-  // console.log(queries);
+  console.log("request url: "+req.url);
+  console.log("Query: "+path);
 
+  //When blockly iframe is requested, inject requested module scripts:
   if(path[1] === 'frame.html' && queries && queries.bloccoliExtensions){
+
     console.log("Frame with arguments recognized.");
     var extensions = _.uniq(eval(unescape(queries.bloccoliExtensions)));
+    res.writeHead(200);
+    res.write(frame[0]);
 
-    var extensionTrumpet = trumpet();
-    extensionTrumpet.selectAll('#frameInitScript', function(elem){
-      var writeOutStream = elem.createWriteStream();
-      for(var i = 0; i < extensions.length; i++){
-        console.log("Piping out module.");
-        fs.createReadStream(__dirname + './site/blocks/'+extensions[i]+'.js').pipe(writeOutStream);
-      }
-    });
+    for(var i = 0; i < extensions.length; i++){
+      res.write('<script src="./blocks/'+extensions[i]+'.js"></script>');
+    }
+    res.end(frame[1]);
 
-    fs.createReadStream(__dirname+'./site/frame.html')
-    .pipe(extensionTrumpet).pipe(res);
-
+  //Otherwise, route to static assets:
   }else{
-    // console.log("Ecstatic taking over");
-    ecstatic({root: __dirname+'./site/', handleError:false})(req, res);
+    ecstatic({root: __dirname+'/site', handleError:false})(req, res);
   }
-
-
-  // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081')
-  // res.writeHead(200);
-  // fs.createReadStream('./blocks/alert.js').pipe(res);
-
 
 }).listen(port);

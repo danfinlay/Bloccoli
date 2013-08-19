@@ -6,6 +6,8 @@ Building on my thoughts from [this post](https://github.com/flyswatter/Blockly-B
 
 Allows new modules full of javascript-compiling blocks to be added to its projects.  The basic functionality is working, now is the "adding modules" and "sanitizing the javascript" phase.  Adding modules should include adding a nice interface for browsing them.
 
+Currently "browser" is the only valid module.  It only features an "alert" block.  But the premise is simple!  New blocks can be added casually and easily!
+
 ##Contributing Block Modules
 
 If you'd like to add modules to Bloccoli, simply add them to the ./site/blocks folder.
@@ -33,5 +35,3 @@ A node.js program.  It exists in the "blockServer" folder.  From there, just run
     $ node index.js
 
 At the moment, the app is a basic ol' blockly instance, EXCEPT if you click "Add Blocks", and enter a valid module name, that module and its blocks will be added to the block menu on the left.
-
-Currently "browser" is the only valid module.  It only features an "alert" block.  But the premise is simple!  New blocks can be added casually and easily!

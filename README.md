@@ -39,9 +39,9 @@ Currently the app consists of two parts, client and server.
 ####Client
 Bundled using Browserify.  Bundle any updates from the root via:
 
-    $ browserify index.js -o site/js/bundle.js
+    $ browserify client/index.js -o site/js/bundle.js
 
 ####Server
-A node.js program.  It exists in the "blockServer" folder.  From there, just run:
+A node.js program.  It exists in the root directory.  From there, just run:
 
     $ node index.js

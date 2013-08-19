@@ -1,27 +1,17 @@
 {
-  "name": "Bloccoli",
-  "version": "2.0.0",
-  "description": "A visual programming editor that compiles to javascript.",
+  "name": "blockServer",
+  "version": "0.0.0",
+  "description": "A server for adding block categories to bloccoli.",
   "main": "index.js",
   "scripts": {
-    "test": "test.js",
-    "build": "browserify index.js -o site/js/bundle.js",
-    "start": "http-server"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://www.github.com/flyswatter/broccoli2"
-  },
-  "keywords": [
-    "visual",
-    "programming",
-    "editor"
-  ],
   "author": "Dan Finlay <dan@danfinlay.com>",
-  "license": "Apache 2.0",
+  "license": "BSD",
   "dependencies": {
-  },
-  "devDependencies": {
-    "watchify": "~0.1.0"
+    "ecstatic": "~0.4.7",
+    "through": "~2.3.4",
+    "trumpet": "~1.5.5",
+    "underscore": "~1.5.1"
   }
 }

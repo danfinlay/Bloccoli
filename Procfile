@@ -1,1 +1,1 @@
-web: node blockServer/index.js
+web: node index.js

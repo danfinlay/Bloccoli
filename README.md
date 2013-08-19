@@ -25,16 +25,15 @@ Yes!  You can make the blocks do almost anything Javscript can do!  Sanitization
 ###Current design:
 The current app flow is fairly straightforward:  
 
-Requesting a module adds it to an escaped JSON array as a "bloccoliExtensions" URL query.
+Requesting a module adds an escaped JSON array of "bloccoliExtensions" to the URL query and reloads.
 
-The server parses out this array, and looks for .js files with the requested module names, and pipes their contents into the frame.html file's "frameInitScript" script tag.
+When the main page loads with a bloccoliExtensions query array, it creates a new iFrame, using the same query into its request url.
 
-Calls to Blockly made in modules are pure pre-injection Blockly interactions.
+When the server finds this array in an iframe request (always for ./site/frame.html), it injects script tags pointing to the requested modules before the Blockly.inject call.
+
+For this reason, calls to Blockly made in modules are pure pre-injection Blockly interactions.  In fact, they're all fairly unrestricted javascript, except that before I allow public uploading of modules, I'll be sanitizing the submitted Javascript automatically.
 
 For people familiar to blockly, the only strange part may be the Javascript object that represents the menu item and its member names, but once you notice that I'm just using that JSON object to generate the menu XML used by blockly, you'll realize I just thought it was a simpler API, and hopefully you'll agree.  If I get some good arguments for why it isn't, maybe I'll switch to XML.  I'm not looking forward to that if it's the case.  Better early than late, though.
-
-
-Currently the app consists of two parts, client and server.
 
 ####Client
 Bundled using Browserify.  Bundle any updates from the root via:

@@ -1,13 +1,16 @@
 var helpUrl = 'http://bloccoli.herokuapp.com'; //Add proper help URL later.
 
 window.parent.blocklyToolbox.push({
-  name:'DOM Selectors',
+  name:'DOM',
   blocks:[
     'dom_select_then',
     'dom_select_elements',
     'dom_select_class',
     'dom_select_id',
-    'dom_replace_text'
+    'dom_replace_text',
+    'dom_replace_html',
+    'dom_append',
+    'dom_prepend'
     ],
   scripts:['http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js']
 });
@@ -16,37 +19,37 @@ console.log("Initing DOM..  Blockly is "+Blockly+" and JS is "+Blockly.JavaScrip
 
 //dom_select_then:
 Blockly.Language.dom_select_then = {
-  helpUrl: helpUrl,
+  helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(180);
-    this.appendValueInput("selector")
+    this.setColour(150);
+    this.appendValueInput("select")
         .setCheck("selector")
-        .appendTitle("DOM Select");
-    this.appendValueInput("action")
+        .appendTitle("Select");
+    this.appendValueInput("then")
         .setCheck("dom_action")
-        .setAlign(Blockly.ALIGN_RIGHT)
-        .appendTitle("Then");
-    this.setInputsInline(true);
+        .appendTitle("then");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setTooltip('Insert element selector into "Select" and insert action block into "then".');
+    this.setTooltip('');
   }
-}
-Blockly.JavaScript.dom_select_then = function() {
-  var value_selector = Blockly.JavaScript.valueToCode(this, 'selector', Blockly.JavaScript.ORDER_NONE);
-  var value_action = Blockly.JavaScript.valueToCode(this, 'action', Blockly.JavaScript.ORDER_NONE);
-  var code = ''
-  if(value_selector && value_action){
-    code = '$('+value_selector+')'+value_action;
-  }
-  return [code, Blockly.JavaScript.ORDER_NONE];
 };
+Blockly.JavaScript.dom_select_then = function() {
+  var value_select = Blockly.JavaScript.valueToCode(this, 'select', Blockly.JavaScript.ORDER_NONE);
+  var value_then = Blockly.JavaScript.valueToCode(this, 'then', Blockly.JavaScript.ORDER_NONE);
+  var code = ''
+  if(value_select && value_then){
+    code = '$('+value_select+')'+value_then+';\n';
+  }
+  return code;
+};
+
+
 Blockly.JavaScript.dom_select_id = function() {
   var text_id = this.getTitleValue('id');
   // TODO: Assemble JavaScript into code variable.
   var code = '"#'+text_id+'"';
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
 //SELECTORS:
@@ -60,7 +63,7 @@ Blockly.Language.dom_select_elements = {
         .appendTitle("Element Type")
         .appendTitle(new Blockly.FieldTextInput("body"), "el_type");
     this.setInputsInline(true);
-    this.setOutput(true);
+    this.setOutput(true, 'selector');
     this.setTooltip('');
   }
 };
@@ -68,7 +71,7 @@ Blockly.JavaScript.dom_select_elements = function() {
   var text_el_type = this.getTitleValue('el_type');
   var code = '"'+ text_el_type+'"';
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
 //Select by Class:
@@ -80,7 +83,7 @@ Blockly.Language.dom_select_class = {
         .appendTitle("Class")
         .appendTitle(new Blockly.FieldTextInput("myClass"), "el_type");
     this.setInputsInline(true);
-    this.setOutput(true);
+    this.setOutput(true, 'selector');
     this.setTooltip('');
   }
 };
@@ -89,7 +92,7 @@ Blockly.JavaScript.dom_select_class = function() {
   // TODO: Assemble JavaScript into code variable.
   var code = '".'+text_class+'"';
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
 //Select by ID:
@@ -98,10 +101,10 @@ Blockly.Language.dom_select_id = {
   init: function() {
     this.setColour(65);
     this.appendDummyInput()
-        .appendTitle("ID")
+        .appendTitle("ID")        
         .appendTitle(new Blockly.FieldTextInput("myID"), "id");
     this.setInputsInline(true);
-    this.setOutput(true);
+    this.setOutput(true, 'selector');
     this.setTooltip('');
   }
 }
@@ -110,14 +113,14 @@ Blockly.Language.dom_select_id = {
 
 //Replace Text:
 Blockly.Language.dom_replace_text = {
-  helpUrl: 'http://www.example.com/',
+  helpUrl: helpUrl,
   init: function() {
-    this.setColour(65);
+    this.setColour(330);
     this.appendValueInput("newText")
         .setCheck("String")
-        .appendTitle("Replace Text With");
+        .appendTitle("Fill with text");
     this.setInputsInline(true);
-    this.setOutput(true);
+    this.setOutput(true, 'dom_action');
     this.setTooltip('');
   }
 };
@@ -125,5 +128,63 @@ Blockly.JavaScript.dom_replace_text = function() {
   var value_newtext = Blockly.JavaScript.valueToCode(this, 'newText', Blockly.JavaScript.ORDER_NONE);
   var code = '.text('+value_newtext+')';
   
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+//Replace HTML:
+Blockly.Language.dom_replace_html = {
+  helpUrl: helpUrl,
+  init: function() {
+    this.setColour(330);
+    this.appendValueInput("newHtml")
+        .setCheck("String")
+        .appendTitle("Fill with HTML");
+    this.setInputsInline(true);
+    this.setOutput(true, 'dom_action');
+    this.setTooltip('');
+  }
+};
+Blockly.JavaScript.dom_replace_html = function() {
+  var value_newhtml = Blockly.JavaScript.valueToCode(this, 'newHtml', Blockly.JavaScript.ORDER_NONE);
+  var code = '.html('+value_newtext+')';
+  
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+//Replace HTML:
+Blockly.Language.dom_append = {
+  helpUrl: helpUrl,
+  init: function() {
+    this.setColour(330);
+    this.appendValueInput("newHtml")
+        .setCheck("String")
+        .appendTitle("Append");
+    this.setInputsInline(true);
+    this.setOutput(true, 'dom_action');
+    this.setTooltip('');
+  }
+};
+Blockly.JavaScript.dom_append = function() {
+  var value_newhtml = Blockly.JavaScript.valueToCode(this, 'newHtml', Blockly.JavaScript.ORDER_NONE);
+  var code = '.append('+value_newhtml+')';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+//Replace HTML:
+Blockly.Language.dom_prepend = {
+  helpUrl: helpUrl,
+  init: function() {
+    this.setColour(330);
+    this.appendValueInput("newHtml")
+        .setCheck("String")
+        .appendTitle("Prepend with");
+    this.setInputsInline(true);
+    this.setOutput(true, 'dom_action');
+    this.setTooltip('');
+  }
+};
+Blockly.JavaScript.dom_prepend = function() {
+  var value_newhtml = Blockly.JavaScript.valueToCode(this, 'newHtml', Blockly.JavaScript.ORDER_NONE);
+  var code = '.prepend('+value_newhtml+')';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

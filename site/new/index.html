@@ -15,9 +15,6 @@
 
   <body>
 
-     <p class="lead">Import <a href="../blocks">custom blocks</a> to program anything!<br>
-     </p>
-
     <h1 id="logo">
       <img src="../img/logo-small.png">
       Bloccoli
@@ -39,8 +36,11 @@
         </div>
         Enter a block module name to add its blocks to your toolbar!<br>
         <input type="text" placeholder="Block Address" id="blojuleAddressField" style="width:70%">
+        <h4>Current modules:</h4>
+        <strong>dom</strong> a module for manipulating the HTML of your result page.<br>
+        <strong>html</strong> (coming soon) a module for creating HTML elements on your result page.
         <div class="modal-footer">
-          Currently only "browser" is a valid module name. <br><em>Know Javascript?  <a href="https://github.com/flyswatter/Bloccoli#contributing-block-modules">Learn to make new modules here</a></em>.<br>
+          <br><em>Know Javascript?  <a href="https://github.com/flyswatter/Bloccoli#contributing-block-modules">Learn to make new modules here</a></em>.<br>
           <button class="btn btn-primary" id="addBlojule">Add</button><button class="btn" data-dismiss="modal"  id="cancel">Cancel</button>
         </div>
       </div>

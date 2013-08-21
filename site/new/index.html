@@ -2,8 +2,8 @@
 <html>
   <head>
     <link href='http://fonts.googleapis.com/css?family=Mouse+Memoirs' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
      </script>
     <script>
       function blocklyLoaded(blockly) {
@@ -15,11 +15,11 @@
 
   <body>
 
-     <p class="lead">Import <a href="./blocks">custom blocks</a> to program anything!<br>
+     <p class="lead">Import <a href="../blocks">custom blocks</a> to program anything!<br>
      </p>
 
     <h1 id="logo">
-      <img src="./img/logo-small.png">
+      <img src="../img/logo-small.png">
       Bloccoli
     </h1>
     <menu>
@@ -27,8 +27,8 @@
     <a href="#" id="addBlocksButton">
      <li>
       <div>
-        Add Blocks 
-        <img src="./img/add-icon.png">
+        Add Blocks
+        <img src="../img/add-icon.png">
       </div>
      </li>
      </a>
@@ -49,11 +49,11 @@
      <li>
        <div class="run">
         Run 
-        <img src="./img/run-icon.png">
+        <img src="../img/run-icon.png">
       </div>
       <div class="stop" style="display:none;">
         Stop
-        <img src="./img/stop.gif">
+        <img src="../img/stop.gif">
       </div>
     </li>
     </a>
@@ -61,27 +61,31 @@
     <a href="#" id="shareButton">
      <li>
       <div>
-      Share Code
-      <img src="./img/share-icon.png">
+      Share
+      <img src="../img/share-icon.png">
     </div>
     </li> 
     </a>
-
+    
     </menu>
-
-      <div class="modal hide fade" id="shareDialog">
+    
+ <div class="modal hide fade" id="shareDialog">
         <div class="modal-header">
           <h3>Share this Project!</h3>
         </div>
-        How would you prefer to share this?<br>
-        <button class="btn" >Editable</button>
-        <button class="btn" >View Only</button>
+
+        <div class="question">
+          How would you like to share this?<br>
+          <button class="btn" id="shareBlocks">As Blocks</button>
+          <button class="btn"  id="shareResult">As Result</button>
+        </div>
+
+        <img src="../img/broc.gif" id="shareLoading" style="display:none"><br>
 
         <div class="modal-footer">
           <button class="btn" data-dismiss="modal"  id="cancel">Cancel</button>
         </div>
       </div>
-
 
     <script>
 
@@ -118,7 +122,7 @@
       }
 
       var urlVars = getUrlVars();
-      var frameUrl = './frame.html';
+      var frameUrl = '../frame.html';
       if(urlVars.bloccoliExtensions){
         frameUrl+='?bloccoliExtensions='+urlVars.bloccoliExtensions
       }

@@ -64,7 +64,7 @@ menu li:hover{
 menu li img{
   margin-bottom:-4px;
 }
-#addBlocksDialog{
+.modal{
   color:black;
   padding:15px;
 }

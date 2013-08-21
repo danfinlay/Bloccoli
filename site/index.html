@@ -24,44 +24,20 @@
     </h1>
     <menu>
 
-    <a href="#" id="addBlocksButton">
+    <a href="./new">
      <li>
       <div>
-        Add Blocks 
+        New 
         <img src="./img/add-icon.png">
       </div>
      </li>
      </a>
 
-      <div class="modal hide fade" id="addBlocksDialog">
-        <div class="modal-header">
-          <h3>Add new blocks to your project!</h3>
-        </div>
-        Enter a block module name to add its blocks to your toolbar!<br>
-        <input type="text" placeholder="Block Address" id="blojuleAddressField" style="width:70%">
-        <div class="modal-footer">
-          Currently only "browser" is a valid module name.<br>
-          <button class="btn btn-primary" id="addBlojule">Add</button><button class="btn" data-dismiss="modal"  id="cancel">Cancel</button>
-        </div>
-      </div>
 
-     <a href="#" id="runButton">
-     <li>
-       <div class="run">
-        Run 
-        <img src="./img/run-icon.png">
-      </div>
-      <div class="stop" style="display:none;">
-        Stop
-        <img src="./img/stop.gif">
-      </div>
-    </li>
-    </a>
-
-    <a href="#" id="shareButton">
+    <a href="./about" id="shareButton">
      <li>
       <div>
-      Share Code
+        About
       <img src="./img/share-icon.png">
     </div>
     </li> 
@@ -82,57 +58,22 @@
         </div>
       </div>
 
+      <div class="container">
+        <div class="row fluid">
+          <div class="span12">
+            <div class="hero-unit">
+              <img src="./img/logo-big.gif" style="float:left;width:30%; padding:15px"><h1>Build programs with blocks, or build blocks with Javascript.</h1>
+              <div class="lead">
+                
+                <strong>Bloccoli</strong> allows anyone to build web applications with visual building blocks.<br>
+                No blocks do what you want?  Browse for new ones, or post a request. (coming soon)<br>
+                If you know Javascript, you can <a href="https://github.com/flyswatter/Bloccoli#contributing-block-modules">design new blocks</a> for others to play with.
+              </div>
 
-    <script>
-
-    window.subFrameFromHtml = function(){
-      var previewFrameShowing = false;
-
-      return function(html){
-        if(document.getElementById('runFrame')) document.getElementById('runFrame').remove();
-        var iframe = document.createElement('iframe');
-        iframe.id = "runFrame";
-        iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
-        document.body.appendChild(iframe);
-      }
-
-    }();
-
-    //JSON representation:
-    var blocklyToolbox = [];
-    //XML Prepared for Blockly:
-    var blocklyXMLToolbox = '';
-
-      function getUrlVars()
-      {
-          var vars = [], hash;
-          var source = window.location.href;
-          var hashes = source.slice(source.indexOf('?') + 1).split('&');
-          for(var i = 0; i < hashes.length; i++)
-          {
-              hash = hashes[i].split('=');
-              vars.push(hash[0]);
-              vars[hash[0]] = hash[1];
-          }
-          return vars;
-      }
-
-      var urlVars = getUrlVars();
-      var frameUrl = './frame.html';
-      if(urlVars.bloccoliExtensions){
-        frameUrl+='?bloccoliExtensions='+urlVars.bloccoliExtensions
-      }
-
-      console.log("Iframe requesting with: "+frameUrl);
-      var iframe = document.createElement('IFRAME');
-      iframe.setAttribute('src', frameUrl);
-      iframe.setAttribute('id', 'blocklyFrame');
-      document.body.appendChild(iframe);
-
-    </script>
-
-    <iframe id = "runFrame">
-    </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
   </body>
 
 </html>

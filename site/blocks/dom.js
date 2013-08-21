@@ -9,7 +9,7 @@ window.parent.blocklyToolbox.push({
     'dom_select_id',
     'dom_replace_text'
     ],
-  scripts:['//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js']
+  scripts:['http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js']
 });
 
 console.log("Initing DOM..  Blockly is "+Blockly+" and JS is "+Blockly.JavaScript);
@@ -33,18 +33,18 @@ Blockly.Language.dom_select_then = {
   }
 }
 Blockly.JavaScript.dom_select_then = function() {
-  var value_selector = Blockly.JavaScript.valueToCode(this, 'selector', Blockly.JavaScript.ORDER_ATOMIC);
-  var value_action = Blockly.JavaScript.valueToCode(this, 'action', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_selector = Blockly.JavaScript.valueToCode(this, 'selector', Blockly.JavaScript.ORDER_NONE);
+  var value_action = Blockly.JavaScript.valueToCode(this, 'action', Blockly.JavaScript.ORDER_NONE);
   var code = ''
   if(value_selector && value_action){
-    code = '$(\''+value_selector+'\').'+value_action;
+    code = '$('+value_selector+')'+value_action;
   }
-  return code;
+  return [code, Blockly.JavaScript.ORDER_NONE];
 };
 Blockly.JavaScript.dom_select_id = function() {
   var text_id = this.getTitleValue('id');
   // TODO: Assemble JavaScript into code variable.
-  var code = '#'+text_id;
+  var code = '"#'+text_id+'"';
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
@@ -66,7 +66,7 @@ Blockly.Language.dom_select_elements = {
 };
 Blockly.JavaScript.dom_select_elements = function() {
   var text_el_type = this.getTitleValue('el_type');
-  var code = '' + text_el_type;
+  var code = '"'+ text_el_type+'"';
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
@@ -87,7 +87,7 @@ Blockly.Language.dom_select_class = {
 Blockly.JavaScript.dom_select_class = function() {
   var text_class = this.getTitleValue('class');
   // TODO: Assemble JavaScript into code variable.
-  var code = '.'+text_class;
+  var code = '".'+text_class+'"';
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
@@ -122,8 +122,8 @@ Blockly.Language.dom_replace_text = {
   }
 };
 Blockly.JavaScript.dom_replace_text = function() {
-  var value_newtext = Blockly.JavaScript.valueToCode(this, 'newText', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = 'text('+value_newtext+');\n';
+  var value_newtext = Blockly.JavaScript.valueToCode(this, 'newText', Blockly.JavaScript.ORDER_NONE);
+  var code = '.text('+value_newtext+')';
   
   return [code, Blockly.JavaScript.ORDER_NONE];
 };

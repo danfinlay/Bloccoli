@@ -28,7 +28,7 @@ module.exports = function(){
     var code = window.Blockly.Generator.workspaceToCode('JavaScript');
     var generatedPage = pageGen(code);
     window.parent.subFrameFromHtml(generatedPage);
-    BlocklyStorage.link()
+    // BlocklyStorage.link()
 
   });
 

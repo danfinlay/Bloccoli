@@ -1,6 +1,8 @@
 var pageGen = require('./pageGenerator');
 
-module.exports = function(toolBoxGen){
+module.exports = function(){
+
+  BlocklyStorage.backupOnUnload();
 
   //Add Blocks Button:
   $(window.parent.document).find('#addBlocksButton').on('click', function(e){
@@ -9,23 +11,13 @@ module.exports = function(toolBoxGen){
   });
 
   //Run Button:
-  var running = false;
   $(window.parent.document).find('#runButton').on('click', function(e){
 
-    if(running){
-      running = false;
-      $(window.parent.document).find('#runButton .run').show();
-      $(window.parent.document).find('#runButton .stop').hide();
-    }else{
-      running = true;
-      $(window.parent.document).find('#runButton .run').hide();
-      $(window.parent.document).find('#runButton .stop').show();
-    }
     e.preventDefault();
     var code = window.Blockly.Generator.workspaceToCode('JavaScript');
     var generatedPage = pageGen(code);
-
     window.parent.subFrameFromHtml(generatedPage);
+    BlocklyStorage.link()
 
   });
 

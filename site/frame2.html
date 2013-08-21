@@ -19,7 +19,7 @@
 
       function init() {
 
-        console.log("Generating toolbox with xml: "+generateToolbox())
+        // console.log("Generating toolbox with xml: "+generateToolbox())
         Blockly.inject(document.body,
           {
             path: './blockly/',
@@ -30,6 +30,7 @@
         // Let the top-level application know that Blockly is ready.
         window.parent.blocklyLoaded(Blockly);
 
+        window.setTimeout(BlocklyStorage.restoreBlocks, 0);
       }
       init();
     </script>

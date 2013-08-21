@@ -24,10 +24,15 @@ http.createServer(function(req, res){
   // console.log("Query: "+path);
 
   //When blockly iframe is requested, inject requested module scripts:
-  if(path[1] === 'frame.html' && queries && queries.bloccoliExtensions){
+  if(path[1] === 'frame.html'){
 
-    // console.log("Frame with arguments recognized.");
-    var extensions = _.uniq(eval(unescape(queries.bloccoliExtensions)));
+     // console.log("Frame with arguments recognized.");
+     var extensions;
+     if(queries && queries.bloccoliExtensions){
+      extensions = _.uniq(eval(unescape(queries.bloccoliExtensions)));
+     }else{
+      extensions = [];
+     }
     res.writeHead(200);
     res.write(frame[0]);
 

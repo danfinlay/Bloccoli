@@ -5,7 +5,6 @@ console.log("URl handler: "+urlHandler);
 var clickHandler = require('./lib/clickHandler')(toolBoxGen);
 //Generate toolbox:
 
-
 toolBoxGen.generateToolbox();
 window.parent.blocklyXMLToolbox = toolBoxGen.toolbox;
 
@@ -109,6 +108,8 @@ module.exports = function(generatedJS){
 
 }
 },{}],4:[function(require,module,exports){
+
+
 module.exports = function(options){
   return new ToolBoxGenerator(options);
 };
@@ -184,6 +185,7 @@ function generateBasicBlocks(){
     {
       name:"Text",
       blocks:[
+        "text",
         "text_join",
         "text_append",
         "text_length",

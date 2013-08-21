@@ -1,3 +1,5 @@
+ 
+  <script type="text/javascript" src="./js/bundle.js"></script>
  <script>
 
 
@@ -15,11 +17,9 @@
         return newXml;
       }
 
-
       function init() {
 
-
-
+        console.log("Generating toolbox with xml: "+generateToolbox())
         Blockly.inject(document.body,
           {
             path: './blockly/',

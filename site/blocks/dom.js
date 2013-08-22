@@ -1,4 +1,4 @@
-var helpUrl = 'http://bloccoli.herokuapp.com'; //Add proper help URL later.
+var helpUrl = 'http://bloccoli.herokuapp.com/blocks/dom.html'; //Add proper help URL later.
 
 window.parent.blocklyToolbox.push({
   name:'DOM',
@@ -119,7 +119,6 @@ Blockly.Language.dom_replace_text = {
     this.appendValueInput("newText")
         .setCheck("String")
         .appendTitle("Fill with text");
-    this.setInputsInline(true);
     this.setOutput(true, 'dom_action');
     this.setTooltip('');
   }
@@ -139,7 +138,6 @@ Blockly.Language.dom_replace_html = {
     this.appendValueInput("newHtml")
         .setCheck("String")
         .appendTitle("Fill with HTML");
-    this.setInputsInline(true);
     this.setOutput(true, 'dom_action');
     this.setTooltip('');
   }
@@ -159,7 +157,6 @@ Blockly.Language.dom_append = {
     this.appendValueInput("newHtml")
         .setCheck("String")
         .appendTitle("Append");
-    this.setInputsInline(true);
     this.setOutput(true, 'dom_action');
     this.setTooltip('');
   }
@@ -178,7 +175,6 @@ Blockly.Language.dom_prepend = {
     this.appendValueInput("newHtml")
         .setCheck("String")
         .appendTitle("Prepend with");
-    this.setInputsInline(true);
     this.setOutput(true, 'dom_action');
     this.setTooltip('');
   }

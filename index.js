@@ -1,4 +1,4 @@
-var http = require('http');
+var https = require('https');
 var fs = require('fs');
 var url = require('url');
 var ecstatic = require('ecstatic');
@@ -12,8 +12,13 @@ var blocklyFrameHandler = require('./routes/frameHandler.js');
 var port = process.env.PORT || 8082;
 console.log("Starting up on port "+port);
 
-http.createServer(function(req, res){
+var httpsOptions = {
+  key: fs.readFileSync(__dirname+'/secrets/server-key.pem'),
+  cert: fs.readFileSync(__dirname+'/secrets/server-cert.pem')
+}
 
+https.createServer(httpsOptions, function(req, res){
+	console.log("Request received.");
   var parsedReq = url.parse(req.url,true);
   var path = parsedReq.pathname.split('/');
 

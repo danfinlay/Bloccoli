@@ -31,6 +31,13 @@ After that, the remaining calls perfectly match what you'd do using Blockly's [b
 
 Yes!  You can make the blocks do almost anything Javscript can do!  Sanitization of Javascript calls to avoid improper use of cookies, etc coming soon!
 
+####Future Block Module Hopes:
+*More complete website interaction
+*A 2D drawing/animation/games engine, like Processing.js, Paper.js, or Rafael.js
+*A 3D modeling system like OpenJSCAD
+*A 3D Games engine like Voxel.js
+*More...
+
 ##Modifying the Core
 
 ###Current design:

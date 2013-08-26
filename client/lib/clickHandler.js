@@ -1,4 +1,6 @@
 var pageGen = require('./pageGenerator');
+var request = require('browser-request');
+window.currentUser = null;
 
 module.exports = function(){
 
@@ -28,13 +30,8 @@ module.exports = function(){
     $(window.parent.document).find("#shareDialog h3").text('Share this Project!');
     $(window.parent.document).find('#shareLoading').hide();
     $(window.parent.document).find("#shareDialog").modal();
-    //Blockly XML:
 
-
-    // $.ajax({
-    //   url:
-    // });
-
+   
   });
 
   $(window.parent.document).find('#shareBlocks').on('click', function(e){
@@ -44,6 +41,26 @@ module.exports = function(){
     $(window.parent.document).find('#shareDialog .question').hide();
     $(window.parent.document).find('#shareLoading').show();
     $(window.parent.document).find("#shareDialog h3").text('Loading...');
+
+
+     //Blockly XML:
+    var blocklyXml = window.Blockly.Xml.workspaceToDom(window.Blockly.mainWorkspace);
+
+    var postData = {
+      'code':blocklyXml,
+      'createdAt': Date.now(),
+      'author': window.currentUser || 'anon',
+      'scripts': window.bloccoliExtensions
+    }
+
+    console.log("Attempting to post project..");
+
+    request.post({method:'POST', url:'/newProgram', body:JSON.stringify(postData), json:true},
+      function(er, res, body){
+        if(er) return console.log("Project post returned er: ", er);
+        console.log("Attempt to post data returned "+res+" and "+body);
+    });
+
   });
 
   $(window.parent.document).find('#shareResult').on('click', function(e){
@@ -57,6 +74,24 @@ module.exports = function(){
     $(window.parent.document).find('#shareDialog .question').hide();
     $(window.parent.document).find('#shareLoading').show();
     $(window.parent.document).find("#shareDialog h3").text('Loading...');
+
+         //Blockly XML:
+    var code = window.Blockly.Generator.workspaceToCode('JavaScript');
+
+    var postData = {
+      'code':code,
+      'createdAt': Date.now(),
+      'author': window.currentUser || 'anon',
+      'scripts': window.bloccoliExtensions
+    }
+
+    console.log("Attempting to post compiled project..");
+
+    request.post({method:'POST', url:'/newResult', body:JSON.stringify(postData), json:true},
+      function(er, res, body){
+        if(er) return console.log("Project post returned er: ", er);
+        console.log("Attempt to post data returned "+res+" and "+body);
+    });
   });
 
 }

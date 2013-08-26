@@ -1,4 +1,5 @@
 var https = require('https');
+var http = require('http');
 var fs = require('fs');
 var url = require('url');
 var ecstatic = require('ecstatic');
@@ -8,6 +9,7 @@ var _ = require('underscore');
 
 //Route handlers:
 var blocklyFrameHandler = require('./routes/frameHandler.js');
+var projectPostHandler = require('./routes/projectPostHandler.js');
 
 var port = process.env.PORT || 8082;
 console.log("Starting up on port "+port);
@@ -18,7 +20,7 @@ var httpsOptions = {
 }
 
 https.createServer(httpsOptions, function(req, res){
-	console.log("Request received.");
+	// console.log("Request received.");
   var parsedReq = url.parse(req.url,true);
   var path = parsedReq.pathname.split('/');
 
@@ -27,8 +29,18 @@ https.createServer(httpsOptions, function(req, res){
     blocklyFrameHandler(req, res);
 
   //Otherwise, route to static assets:
+  }else if(path[1] === 'newProgram' && req.method === 'POST'){
+  	projectPostHandler(req, res);
+
   }else{
     ecstatic({root: __dirname+'/site', handleError:false})(req, res);
   }
 
 }).listen(port);
+
+//Redirect http requests to HTTPS:
+// http.createServer(function(req, res){
+// 	res.writeHead(200);
+// 	res.end('<html><a href="https://localhost:'+port+'">Continue to site</a></html>');
+// }).listen(port);
+

@@ -20,6 +20,7 @@
   "author": "Dan Finlay <dan@danfinlay.com>",
   "license": "Apache 2.0",
   "dependencies": {
+    "browser-request": "~0.2.1"
   },
   "devDependencies": {
     "watchify": "~0.1.0"

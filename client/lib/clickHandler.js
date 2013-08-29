@@ -1,5 +1,7 @@
 var pageGen = require('./pageGenerator');
 var request = require('browser-request');
+var xml_digester = require('xml-digester');
+var digester = xml_digester.XmlDigester({});
 window.currentUser = null;
 
 module.exports = function(){
@@ -44,7 +46,7 @@ module.exports = function(){
 
 
      //Blockly XML:
-    var blocklyXml = window.Blockly.Xml.workspaceToDom(window.Blockly.mainWorkspace);
+    var blocklyXml = window.Blockly.Xml.domToPrettyText(window.Blockly.Xml.workspaceToDom(window.Blockly.mainWorkspace));
 
     var postData = {
       'code':blocklyXml,
@@ -55,7 +57,7 @@ module.exports = function(){
 
     console.log("Attempting to post project..");
 
-    request.post({method:'POST', url:'/newProgram', body:JSON.stringify(postData), json:true},
+    request.post({method:'POST', url:'/newProgram', body:postData, json:true},
       function(er, res, body){
         if(er) return console.log("Project post returned er: ", er);
         console.log("Attempt to post data returned "+res+" and "+body);
@@ -94,4 +96,23 @@ module.exports = function(){
     });
   });
 
+}
+
+
+function xml2Str(xmlNode) {
+   try {
+      // Gecko- and Webkit-based browsers (Firefox, Chrome), Opera.
+      return (new XMLSerializer()).serializeToString(xmlNode);
+  }
+  catch (e) {
+     try {
+        // Internet Explorer.
+        return xmlNode.xml;
+     }
+     catch (e) {  
+        //Other browsers without XML Serializer
+        alert('Xmlserializer not supported');
+     }
+   }
+   return false;
 }

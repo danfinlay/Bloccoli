@@ -21,7 +21,7 @@ console.log("Starting up on port "+port);
 // }
 
 http.createServer(function(req, res){
-	console.log("Request received.");
+	// console.log("Request received.");
 
   var parsedReq = url.parse(req.url,true);
   var path = parsedReq.pathname.split('/');

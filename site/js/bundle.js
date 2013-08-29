@@ -1,11 +1,12 @@
 ;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var urlHandler = require('./lib/urlHandler')();
 var clickHandler = require('./lib/clickHandler')();
-},{"./lib/clickHandler":2,"./lib/urlHandler":4}],2:[function(require,module,exports){
+},{"./lib/clickHandler":2,"./lib/urlHandler":5}],2:[function(require,module,exports){
 var pageGen = require('./pageGenerator');
 var request = require('browser-request');
 var xml_digester = require('xml-digester');
 var digester = xml_digester.XmlDigester({});
+var modal = require('./modal');
 window.currentUser = null;
 
 module.exports = function(){
@@ -32,10 +33,7 @@ module.exports = function(){
   //Share Button:
   $(window.parent.document).find('#shareButton').on('click', function(e){
     e.preventDefault();
-    $(window.parent.document).find('#shareDialog .question').show();
-    $(window.parent.document).find("#shareDialog h3").text('Share this Project!');
-    $(window.parent.document).find('#shareLoading').hide();
-    $(window.parent.document).find("#shareDialog").modal();
+    modal.shareDialog();
 
    
   });
@@ -47,7 +45,6 @@ module.exports = function(){
     $(window.parent.document).find('#shareDialog .question').hide();
     $(window.parent.document).find('#shareLoading').show();
     $(window.parent.document).find("#shareDialog h3").text('Loading...');
-
 
      //Blockly XML:
     var blocklyXml = window.Blockly.Xml.domToPrettyText(window.Blockly.Xml.workspaceToDom(window.Blockly.mainWorkspace));
@@ -63,8 +60,9 @@ module.exports = function(){
 
     request.post({method:'POST', url:'/newProgram', body:postData, json:true},
       function(er, res, body){
-        if(er) return console.log("Project post returned er: ", er);
-        console.log("Attempt to post data returned "+res+" and "+body);
+        if(er) return modal.stopLoading("Project post had an error: "+ er);
+        modal.doneLoadingNewProject(JSON.parse(res.responseText).uniqueId);
+
     });
 
   });
@@ -93,10 +91,11 @@ module.exports = function(){
 
     console.log("Attempting to post compiled project..");
 
-    request.post({method:'POST', url:'/newResult', body:JSON.stringify(postData), json:true},
+    request.post({url:'/newResult', body:JSON.stringify(postData), json:true},
       function(er, res, body){
-        if(er) return console.log("Project post returned er: ", er);
-        console.log("Attempt to post data returned "+res+" and "+body);
+        if(er) return modal.stopLoading("Project post had an error: "+ er);
+        modal.doneLoadingNewProject(JSON.parse(res.responseText).uniqueId);
+
     });
   });
 
@@ -120,7 +119,36 @@ function xml2Str(xmlNode) {
    }
    return false;
 }
-},{"./pageGenerator":3,"browser-request":5,"xml-digester":7}],3:[function(require,module,exports){
+},{"./modal":3,"./pageGenerator":4,"browser-request":6,"xml-digester":8}],3:[function(require,module,exports){
+exports.startLoading = function(){
+    $(window.parent.document).find('#shareDialog .question').hide();
+    $(window.parent.document).find('#shareLoading').show();
+    $(window.parent.document).find("#shareDialog h3").text('Loading...');
+}
+
+function stopLoading(message){
+  console.log("Stop loading requested with message: "+message);
+
+    $(window.parent.document).find('#shareLoading').hide();
+    $(window.parent.document).find("#shareDialog h3").html(message);
+}
+
+exports.stopLoading = stopLoading;
+
+exports.shareDialog = function(){
+    $(window.parent.document).find('#shareDialog .question').show();
+    $(window.parent.document).find("#shareDialog h3").text('Share this Project!');
+    $(window.parent.document).find('#shareLoading').hide();
+    $(window.parent.document).find("#shareDialog").modal();
+}
+
+exports.doneLoadingNewProject = function(newProjectId){
+  var url = '/programs/'+newProjectId;
+
+  var message = "<h2>Congratulations!</h2><p>Your new app can be found online at:<br><a href='"+url+"'>"+url+"</a>";
+  stopLoading(message);
+}
+},{}],4:[function(require,module,exports){
 module.exports = function(generatedJS){
 
   window.parent.blocklyToolbox;
@@ -148,7 +176,7 @@ module.exports = function(generatedJS){
   return result;
 
 }
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 
 
 function UrlHandler(){
@@ -218,7 +246,7 @@ module.exports = function(){
   // console.log("Extension urls embedded: "+JSON.stringify(window.bloccoliExtensions));
   return result;
 }
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 // Browser Request
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -608,7 +636,7 @@ function b64_enc (data) {
     return enc;
 }
 
-},{"./xmlhttprequest":6}],6:[function(require,module,exports){
+},{"./xmlhttprequest":7}],7:[function(require,module,exports){
 
 
 !function(window) {
@@ -1182,7 +1210,7 @@ function b64_enc (data) {
   }
 }(typeof window !== 'undefined' ? window : {});
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 // wrapper for non-node envs
 ;(function (xml_digester) {
 
@@ -1600,7 +1628,7 @@ function b64_enc (data) {
 })(typeof exports === "undefined" ? sax = {} : exports)
 
 
-},{"sax":8,"util":12}],8:[function(require,module,exports){
+},{"sax":9,"util":13}],9:[function(require,module,exports){
 var Buffer=require("__browserify_Buffer").Buffer;// wrapper for non-node envs
 ;(function (sax) {
 
@@ -2931,7 +2959,7 @@ function write (chunk) {
 
 })(typeof exports === "undefined" ? sax = {} : exports)
 
-},{"__browserify_Buffer":13,"stream":10,"string_decoder":11}],9:[function(require,module,exports){
+},{"__browserify_Buffer":14,"stream":11,"string_decoder":12}],10:[function(require,module,exports){
 var process=require("__browserify_process");if (!process.EventEmitter) process.EventEmitter = function () {};
 
 var EventEmitter = exports.EventEmitter = process.EventEmitter;
@@ -3116,7 +3144,18 @@ EventEmitter.prototype.listeners = function(type) {
   return this._events[type];
 };
 
-},{"__browserify_process":14}],10:[function(require,module,exports){
+EventEmitter.listenerCount = function(emitter, type) {
+  var ret;
+  if (!emitter._events || !emitter._events[type])
+    ret = 0;
+  else if (typeof emitter._events[type] === 'function')
+    ret = 1;
+  else
+    ret = emitter._events[type].length;
+  return ret;
+};
+
+},{"__browserify_process":15}],11:[function(require,module,exports){
 var events = require('events');
 var util = require('util');
 
@@ -3237,7 +3276,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":9,"util":12}],11:[function(require,module,exports){
+},{"events":10,"util":13}],12:[function(require,module,exports){
 var Buffer=require("__browserify_Buffer").Buffer;var StringDecoder = exports.StringDecoder = function(encoding) {
   this.encoding = (encoding || 'utf8').toLowerCase().replace(/[-_]/, '');
   switch (this.encoding) {
@@ -3400,7 +3439,7 @@ function base64DetectIncompleteChar(buffer) {
   return incomplete;
 }
 
-},{"__browserify_Buffer":13}],12:[function(require,module,exports){
+},{"__browserify_Buffer":14}],13:[function(require,module,exports){
 var events = require('events');
 
 exports.isArray = isArray;
@@ -3753,7 +3792,7 @@ exports.format = function(f) {
   return str;
 };
 
-},{"events":9}],13:[function(require,module,exports){
+},{"events":10}],14:[function(require,module,exports){
 require=(function(e,t,n,r){function i(r){if(!n[r]){if(!t[r]){if(e)return e(r);throw new Error("Cannot find module '"+r+"'")}var s=n[r]={exports:{}};t[r][0](function(e){var n=t[r][1][e];return i(n?n:e)},s,s.exports)}return n[r].exports}for(var s=0;s<r.length;s++)i(r[s]);return i})(typeof require!=="undefined"&&require,{1:[function(require,module,exports){
 // UTILITY
 var util = require('util');
@@ -7615,7 +7654,7 @@ SlowBuffer.prototype.writeDoubleBE = Buffer.prototype.writeDoubleBE;
 },{}]},{},[])
 ;;module.exports=require("buffer-browserify")
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};

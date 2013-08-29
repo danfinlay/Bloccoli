@@ -2,20 +2,6 @@ var level = require('../node_modules/level');
 var util = require('util');
 var uniqueKey = require('./uniqueKeyGen');
 
-function BloccoliDB(name){
-	this.bloccoliName = name;
-}
-
-BloccoliDB.prototype.putUnique = function(data, cb){
-	uniqueKey(this, function(er, key){
-		if(er) cb(er);
-		this.put(key, data, function(er){
-			if(er) cb(er);
-			cb(null, key);
-		})
-	})
-}
-
 module.exports = function BroccoliDB(name){
 
 	var db = level(name, {

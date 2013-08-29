@@ -2,7 +2,6 @@
   <script type="text/javascript" src="./js/bundle.js"></script>
  <script>
 
-
       function generateToolbox(){
         var newXml = '<xml id="toolbox">';
         for(var i = 0, iLen = window.parent.blocklyToolbox.length; i < iLen; i++){
@@ -30,7 +29,7 @@
         // Let the top-level application know that Blockly is ready.
         window.parent.blocklyLoaded(Blockly);
 
-        window.setTimeout(BlocklyStorage.restoreBlocks, 0);
+        if(newProgram) window.setTimeout(BlocklyStorage.restoreBlocks, 0);
       }
       init();
     </script>

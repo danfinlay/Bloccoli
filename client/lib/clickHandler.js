@@ -2,6 +2,7 @@ var pageGen = require('./pageGenerator');
 var request = require('browser-request');
 var xml_digester = require('xml-digester');
 var digester = xml_digester.XmlDigester({});
+var modal = require('./modal');
 window.currentUser = null;
 
 module.exports = function(){
@@ -28,10 +29,7 @@ module.exports = function(){
   //Share Button:
   $(window.parent.document).find('#shareButton').on('click', function(e){
     e.preventDefault();
-    $(window.parent.document).find('#shareDialog .question').show();
-    $(window.parent.document).find("#shareDialog h3").text('Share this Project!');
-    $(window.parent.document).find('#shareLoading').hide();
-    $(window.parent.document).find("#shareDialog").modal();
+    modal.shareDialog();
 
    
   });
@@ -43,7 +41,6 @@ module.exports = function(){
     $(window.parent.document).find('#shareDialog .question').hide();
     $(window.parent.document).find('#shareLoading').show();
     $(window.parent.document).find("#shareDialog h3").text('Loading...');
-
 
      //Blockly XML:
     var blocklyXml = window.Blockly.Xml.domToPrettyText(window.Blockly.Xml.workspaceToDom(window.Blockly.mainWorkspace));
@@ -59,8 +56,9 @@ module.exports = function(){
 
     request.post({method:'POST', url:'/newProgram', body:postData, json:true},
       function(er, res, body){
-        if(er) return console.log("Project post returned er: ", er);
-        console.log("Attempt to post data returned "+res+" and "+body);
+        if(er) return modal.stopLoading("Project post had an error: "+ er);
+        modal.doneLoadingNewProject(JSON.parse(res.responseText).uniqueId);
+
     });
 
   });
@@ -89,10 +87,11 @@ module.exports = function(){
 
     console.log("Attempting to post compiled project..");
 
-    request.post({method:'POST', url:'/newResult', body:JSON.stringify(postData), json:true},
+    request.post({url:'/newResult', body:JSON.stringify(postData), json:true},
       function(er, res, body){
-        if(er) return console.log("Project post returned er: ", er);
-        console.log("Attempt to post data returned "+res+" and "+body);
+        if(er) return modal.stopLoading("Project post had an error: "+ er);
+        modal.doneLoadingNewProject(JSON.parse(res.responseText).uniqueId);
+
     });
   });
 

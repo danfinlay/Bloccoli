@@ -6,10 +6,12 @@ var ecstatic = require('ecstatic');
 var through = require('through');
 var trumpet = require('trumpet');
 var _ = require('underscore');
+var domain = require('domain');
 
 //Route handlers:
 var blocklyFrameHandler = require('./routes/frameHandler.js');
 var projectPostHandler = require('./routes/projectPostHandler.js');
+var programHandler = require('./routes/programHandler.js');
 
 var port = process.env.PORT || 8082;
 console.log("Starting up on port "+port);
@@ -21,22 +23,64 @@ console.log("Starting up on port "+port);
 // }
 
 http.createServer(function(req, res){
-	// console.log("Request received.");
 
-  var parsedReq = url.parse(req.url,true);
-  var path = parsedReq.pathname.split('/');
+  //Handle errors with domains:
+  var d = domain.create();
+  d.on('error', function(er){
+    console.log("Connection threw error: "+er+' from stack: '+er.stack);
 
-  //When blockly iframe is requested, inject requested module scripts:
-  if(path[1] === 'frame.html'){
-    blocklyFrameHandler(req, res);
+    try{
+      var killtimer = setTimeout(function() {
+        process.exit(1);
+      }, 30000);
+      // But don't keep the process open just for that!
+      killtimer.unref();
+      // stop taking new requests.
+      server.close();
+      res.statusCode = 500;
+      res.setHeader('content-type', 'text/plain');
+      res.end('Oops, there was a problem!\n');
 
-  //Otherwise, route to static assets:
-  }else if(path[1] === 'newProgram' && req.method === 'POST'){
-  	projectPostHandler(req, res);
+    }catch (er2){
+      console.log("Couldn't shut down gracefully."+ er2.stack);
+    }
+  });
 
-  }else{
-    ecstatic({root: __dirname+'/site', handleError:false})(req, res);
-  }
+  d.run(function(){
+
+    var parsedReq = url.parse(req.url,true);
+    var path = parsedReq.pathname.split('/');
+
+    //When blockly iframe is requested, inject requested module scripts:
+    if(path[1] === 'frame.html'){
+
+      blocklyFrameHandler(req, res);
+
+    //Otherwise, route to static assets:
+    }else if(path[1] === 'newProgram' && req.method === 'POST'){
+
+      projectPostHandler(req, res);
+
+    }else if(path[1] === 'programs' && path[3] === 'frame.html'){
+
+      programHandler(req, res);
+
+    }else if(path[1] === 'programs' && !path[3]){
+
+      res.writeHead(200);
+      fs.createReadStream(__dirname+'/site/new/index.html').pipe(res);
+
+    }else if(path[1] === 'programs' && path[3] !== 'frame.html'){
+
+      ecstatic({root: __dirname+'/site/new', baseDir:'programs', handleError:false})(req, res);
+
+    }else{
+
+      ecstatic({root: __dirname+'/site', handleError:false})(req, res);
+
+    }
+
+  });
 
 }).listen(port);
 

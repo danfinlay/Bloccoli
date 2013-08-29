@@ -1,17 +1,8 @@
 var level = require('./bloccoliDB');
-var q = require('../node_modules/q');
+var Q = require('../node_modules/q');
 var db = level('./programs');
-
-// db.put('test1', {name:"Dan", age: 28}, function(er){
-// 	if(er) return console.log("Problem", er);
-// 	db.get('test1', function(er, value){
-// 		if(er) return console.log("Problme with get.", er);
-
-// 	console.log("Worked!: "+value);
-// 	console.log("Stringified: "+JSON.stringify(value));
-// 	});
-// });
-
+var putUnique = Q.nbind(db.putUnique, db);
+var get = Q.nbind(db.get, db);
 
 module.exports = function(){
 	return new ProgramDB();
@@ -20,18 +11,40 @@ module.exports = function(){
 var ProgramDB = function(){
 }
 
-function newAnonymousProgram(programXML, callback){
-	db.put('test1', {name:"Dan", age: 28}, function(er){
-		if(er) return console.log("Problem", er);
-		db.get('test1', function(er, value){
-			if(er) return console.log("Problme with get.", er);
+function newAnonymousProgram(postedObject){
 
-		console.log("Worked!: "+value);
-		console.log("Stringified: "+JSON.stringify(value));
-		});
-	});
+  var deferred = Q.defer();
+
+  var program = {
+    xml: postedObject.code,
+    createdAt: Date.now(),
+    author: 'anon',
+    scripts: postedObject.scripts
+  }
+
+  putUnique(program).then(function(uniqueId){
+    deferred.resolve(uniqueId);
+  }, function(reason){
+    deferred.reject(reason);
+  });
+
+  return deferred.promise;
+
 }
 
-var Program = function(opts){
+ProgramDB.prototype.newAnonymousProgram = newAnonymousProgram;
+
+function get(programId){
+  var deferred = Q.defer();
+
+  get(programId).then(function(program){
+    deferred.resolve(program);
+  }, function(reason){
+    deferred.reject("Problem fetching requested program: "+reason);
+  });
+
+  return deferred.promise;
 
 }
+
+ProgramDB.prototype.get = get;

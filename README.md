@@ -7,7 +7,7 @@
 
 Building on my thoughts from [this post](https://github.com/flyswatter/Blockly-Brainstorming).
 
-Allows new modules full of javascript-compiling blocks to be added to its projects.  Basic block importing is working, major remaining tasks:
+Allows new modules full of javascript-compiling blocks to be added to its projects.  Basic block importing is working.  Saving and sharing anonymous projects is working.  Major remaining tasks:
 
 *  Always be adding interesting block modules.
 

@@ -11,8 +11,6 @@ Allows new modules full of javascript-compiling blocks to be added to its projec
 
 *  Always be adding interesting block modules.
 
-*  Complete Anonymous block project saving.
-
 *  Create interface for exploring saved block projects.
 
 *  Implement User Accounts

@@ -6,7 +6,7 @@ var programDB = programs();
 var recentPosters = {};
 
 module.exports = function(req, res){
-
+  console.log("Posting attempted...");
 
   var postReceivedTime = Date.now();
 
@@ -30,7 +30,7 @@ module.exports = function(req, res){
       console.log("Body result: "+JSON.stringify(parsed, null, '\t'));
       console.log("Code result: "+parsed.code);
 
-      programDB.newAnonymousProgram(parsedReq).then(function(programId){
+      programDB.newAnonymousProgram(parsed).then(function(programId){
 
         console.log("New program added: "+programId+" in just "+(Date.now()-postReceivedTime) +' miliseconds.');
         res.writeHead(200);
@@ -38,7 +38,7 @@ module.exports = function(req, res){
 
       }, function(reason){
 
-        console.log("Saving created error: "+reason);
+        // console.log("Saving created error: "+reason);
         res.writeHead(500);
         res.end(reason);
 

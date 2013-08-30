@@ -1,11 +1,11 @@
-
+var _ = require('../../node_modules/underscore');
 
 function UrlHandler(){
   this.getUrlVars = getUrlVars;
+  this.extensions = [];
   this.updateExtensions = updateExtensions;
   this.reloadPageWithExtensions = reloadPageWithExtensions;
   this.reloadPageWithExtension = reloadPageWithExtension;
-
   var handler = this;
   $(window.parent.document).find('#addBlojule').on('click', function(e){
 
@@ -16,7 +16,9 @@ function UrlHandler(){
   });
 }
 
+var defaults = ["Logic", "Loops", "Math", "Text", "Lists", "Color", "Variables", "Functions"];
 // UrlHandler.prototype.getUrlVars = getUrlVars;
+
 
 function getUrlVars()
 {
@@ -34,36 +36,51 @@ function getUrlVars()
 
 // UrlHandler.prototype.updateExtensions = updateExtensions;
 function updateExtensions(){
-  var urlVals = getUrlVars();
-  console.log("URL vals: "+JSON.stringify(urlVals));
-  if(urlVals.bloccoliExtensions){
-    window.bloccoliExtensions = eval(unescape(urlVals.bloccoliExtensions));
-    console.log("Saved extensions: "+JSON.stringify(window.bloccoliExtensions));
-  }
-}
+  var currentExtensions = _.map(window.parent.blocklyToolbox, function(item){ return item.name; });
+  var finals = [];
 
-function reloadPageWithExtensions(){
-  var newUrl = './';
-  if(window.bloccoliExtensions){
-    newUrl+='?bloccoliExtensions='+escape(JSON.stringify(window.bloccoliExtensions));
+  currentExtensions.forEach(function(extensionName){
+    if(!_.contains(defaults, extensionName)) 
+      finals.push(extensionName);
+  });
+
+  // console.log("Current blocks identified: "+JSON.stringify(this.extensions));
+
+  var urlVals = getUrlVars();
+  if(urlVals['bloccoliExtensions']){
+    // console.log("URL blocks added: "+JSON.stringify(eval(unescape(urlVals.bloccoliExtensions))));
+    var urlBlocks = eval(unescape(urlVals.bloccoliExtensions));
+    finals.concat(urlBlocks);
   }
-  window.parent.location.href = newUrl;
+  this.extensions = finals;
+  // console.log("All together now: "+JSON.stringify(this.extensions));
+
 }
 
 function reloadPageWithExtension(newExtensionUrl){
-  var newUrl = './';
-  if(window.bloccoliExtensions){
-    window.bloccoliExtensions.push(newExtensionUrl)
-  }else{
-    window.bloccoliExtensions = [newExtensionUrl];
-  }
-  reloadPageWithExtensions();
+
+  this.updateExtensions();
+  this.extensions.push(newExtensionUrl);
+  // console.log("Check out with the requested one: "+JSON.stringify(this.extensions));
+  var newUrl = '/new?bloccoliExtensions='+escape(JSON.stringify(this.extensions));
+  // console.log("Check out with the requested two: "+newUrl);
+  window.parent.location.href = newUrl;
+}
+
+
+function reloadPageWithExtensions(){
+  // console.log("Reloading page with extensions: "+JSON.stringify(this.extensions));
+  var newUrl = '/new?bloccoliExtensions='+escape(JSON.stringify(this.extensions));
+
+  // console.log("How do you like my pretty new href?"+newUrl);
+  window.parent.location.href = newUrl;
 }
 
 module.exports = function(){
-  console.log("Initializing url handler.");
+  // console.log("Initializing url handler.");
   var result = new UrlHandler();
   result.updateExtensions();
   // console.log("Extension urls embedded: "+JSON.stringify(window.bloccoliExtensions));
   return result;
 }
+

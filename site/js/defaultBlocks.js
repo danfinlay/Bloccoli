@@ -5,4 +5,4 @@ Blockly.Language.text = {
   init: function (){this.setColour(160);this.appendDummyInput().appendTitle(new Blockly.FieldImage(Blockly.pathToBlockly+"media/quote0.png",12,12)).appendTitle(new Blockly.FieldTextInput(""),"TEXT").appendTitle(new Blockly.FieldImage(Blockly.pathToBlockly+"media/quote1.png",12,12));this.setOutput(!0,"String");this.setTooltip(Blockly.LANG_TEXT_TEXT_TOOLTIP)}
 };
 
-console.log("Attempting to add text to defaults");
+// console.log("Attempting to add text to defaults");

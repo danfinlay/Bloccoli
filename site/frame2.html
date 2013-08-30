@@ -29,7 +29,12 @@
         // Let the top-level application know that Blockly is ready.
         window.parent.blocklyLoaded(Blockly);
 
-        if(newProgram) window.setTimeout(BlocklyStorage.restoreBlocks, 0);
+        if(newProgram) {
+          window.setTimeout(BlocklyStorage.restoreBlocks, 0);
+        }else{
+          var domXml = Blockly.Xml.textToDom(uglyXml);
+          Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, domXml);
+        }
       }
       init();
     </script>

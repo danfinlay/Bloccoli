@@ -50,6 +50,7 @@ http.createServer(function(req, res){
 
     var parsedReq = url.parse(req.url,true);
     var path = parsedReq.pathname.split('/');
+    // console.log("Requested with path: "+JSON.stringify(path));
 
     //When blockly iframe is requested, inject requested module scripts:
     if(path[1] === 'frame.html'){

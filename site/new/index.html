@@ -16,7 +16,9 @@
   <body>
 
     <h1 id="logo">
-      <img src="../img/logo-small.png">
+      <a href="/">
+        <img src="../img/logo-small.png">
+      </a>
       Bloccoli
     </h1>
     <menu>
@@ -123,11 +125,13 @@
 
       var urlVars = getUrlVars();
       var frameUrl = '../frame.html';
-      if(urlVars.bloccoliExtensions){
-        frameUrl+='?bloccoliExtensions='+urlVars.bloccoliExtensions
+
+
+      if(blocklyToolbox.length > 0){
+        frameUrl+='?bloccoliExtensions='+escape(JSON.stringify(blocklyToolbox));
       }
 
-      console.log("Iframe requesting with: "+frameUrl);
+      // console.log("Iframe requesting with: "+frameUrl);
       var iframe = document.createElement('IFRAME');
       iframe.setAttribute('src', frameUrl);
       iframe.setAttribute('id', 'blocklyFrame');

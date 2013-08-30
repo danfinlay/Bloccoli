@@ -1,6 +1,7 @@
 ![logo](site/img/logo-small.png)
 #Bloccoli
 ###A Modular [Blockly](http://code.google.com/p/blockly/) Programming Environment
+###Very Much in Beta.  No Saves are Sacred.
 
 ####[Live instance running here](http://bloccoli.herokuapp.com/)
 
@@ -8,16 +9,20 @@ Building on my thoughts from [this post](https://github.com/flyswatter/Blockly-B
 
 Allows new modules full of javascript-compiling blocks to be added to its projects.  Basic block importing is working, major remaining tasks:
 
-1.  Add enough modules to make it interesting.
+*  Always be adding interesting block modules.
 
-2.  Add user accounts for sharing projects & block sets.
+*  Complete Anonymous block project saving.
 
-3.  Automate Javascript Sanitization (for new submitted modules).  Probably using [Caja](https://developers.google.com/apps-script/guides/html-service-caja).
+*  Create interface for exploring saved block projects.
 
-4.  Create interface for contributing & exploring modules.
+*  Implement User Accounts
+
+*  Allow user block module submitting (javascript sanitization server-side by Caja).
+
+*  Begin adding enough modules for interesting projects to be developed.
+
 -
-
-Currently, "dom" is the only valid module.  It only features an "alert" block.  But the premise is simple!  New blocks can be added casually and easily!
+Currently, "dom" and "html" are the only valid modules, and they are minimal and demo-ish.But the premise is simple!  New blocks can be added surprisingly easily!
 
 ##Contributing Block Modules
 

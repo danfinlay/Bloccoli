@@ -15,7 +15,7 @@ window.parent.blocklyToolbox.push({
   scripts:['http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js']
 });
 
-console.log("Initing DOM..  Blockly is "+Blockly+" and JS is "+Blockly.JavaScript);
+// console.log("Initing DOM..  Blockly is "+Blockly+" and JS is "+Blockly.JavaScript);
 
 //dom_select_then:
 Blockly.Language.dom_select_then = {

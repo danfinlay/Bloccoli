@@ -1,7 +1,5 @@
 var pageGen = require('./pageGenerator');
 var request = require('browser-request');
-var xml_digester = require('xml-digester');
-var digester = xml_digester.XmlDigester({});
 var modal = require('./modal');
 window.currentUser = null;
 
@@ -30,8 +28,6 @@ module.exports = function(){
   $(window.parent.document).find('#shareButton').on('click', function(e){
     e.preventDefault();
     modal.shareDialog();
-
-   
   });
 
   $(window.parent.document).find('#shareBlocks').on('click', function(e){
@@ -43,7 +39,7 @@ module.exports = function(){
     $(window.parent.document).find("#shareDialog h3").text('Loading...');
 
      //Blockly XML:
-    var blocklyXml = window.Blockly.Xml.domToPrettyText(window.Blockly.Xml.workspaceToDom(window.Blockly.mainWorkspace));
+    var blocklyXml = window.Blockly.Xml.domToText(window.Blockly.Xml.workspaceToDom(window.Blockly.mainWorkspace));
 
     var postData = {
       'code':blocklyXml,
@@ -95,23 +91,4 @@ module.exports = function(){
     });
   });
 
-}
-
-
-function xml2Str(xmlNode) {
-   try {
-      // Gecko- and Webkit-based browsers (Firefox, Chrome), Opera.
-      return (new XMLSerializer()).serializeToString(xmlNode);
-  }
-  catch (e) {
-     try {
-        // Internet Explorer.
-        return xmlNode.xml;
-     }
-     catch (e) {  
-        //Other browsers without XML Serializer
-        alert('Xmlserializer not supported');
-     }
-   }
-   return false;
-}
+};

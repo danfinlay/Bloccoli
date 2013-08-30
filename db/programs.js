@@ -15,12 +15,16 @@ function newAnonymousProgram(postedObject){
 
   var deferred = Q.defer();
 
+  console.log("Creating program from posted object: "+JSON.stringify(postedObject));
+
   var program = {
     xml: postedObject.code,
     createdAt: Date.now(),
     author: 'anon',
     scripts: postedObject.scripts
   }
+
+  console.log("About to save program: "+JSON.stringify(program));
 
   putUnique(program).then(function(uniqueId){
     deferred.resolve(uniqueId);

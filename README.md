@@ -3,7 +3,8 @@
 ###A Modular [Blockly](http://code.google.com/p/blockly/) Programming Environment
 ###Very Much in Beta.  No Saves are Sacred.
 
-####[Live instance running here](http://bloccoli.herokuapp.com/)
+####[Follow us on Twitter](https://twitter.com/Bloccoli)
+####[Live (but outdated) instance running here](http://bloccoli.herokuapp.com/)
 
 Building on my thoughts from [this post](https://github.com/flyswatter/Blockly-Brainstorming).
 
@@ -16,8 +17,6 @@ Allows new modules full of javascript-compiling blocks to be added to its projec
 *  Implement User Accounts
 
 *  Allow user block module submitting (javascript sanitization server-side by Caja).
-
-*  Begin adding enough modules for interesting projects to be developed.
 
 -
 Currently, "dom" and "html" are the only valid modules, and they are minimal and demo-ish.But the premise is simple!  New blocks can be added surprisingly easily!

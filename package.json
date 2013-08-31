@@ -1,10 +1,11 @@
 {
-  "name": "blockServer",
-  "version": "0.0.0",
+  "name": "Bloccoli",
+  "version": "0.0.0-1",
   "description": "A server for adding block categories to bloccoli.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "Dan Finlay <dan@danfinlay.com>",
   "license": "BSD",
@@ -16,5 +17,9 @@
     "generate-key": "0.0.6",
     "level": "~0.14.0",
     "q": "~0.9.6"
+  },
+  "subdomain": "bloccoli",
+  "engines": {
+    "node": "0.10.x"
   }
 }

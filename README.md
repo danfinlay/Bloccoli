@@ -4,13 +4,17 @@
 ###Very Much in Beta.  No Saves are Sacred.
 
 ####[Follow us on Twitter](https://twitter.com/Bloccoli)
-####[Live (but outdated) instance running here](http://bloccoli.herokuapp.com/)
+####Live instance running [here](http://bloccoli.herokuapp.com/)
 
 Building on my thoughts from [this post](https://github.com/flyswatter/Blockly-Brainstorming).
 
 Allows new modules full of javascript-compiling blocks to be added to its projects.  Basic block importing is working.  Saving and sharing anonymous projects is working.  Major remaining tasks:
 
 *  Always be adding interesting block modules.
+
+*  Scope the modules' namespace!  Pass them a reference to the Blockly object, but keep them from having global scope, to avoid conflicts.
+
+*  Add project names and descriptions to saved programs.
 
 *  Create interface for exploring saved block projects.
 

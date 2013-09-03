@@ -22,7 +22,6 @@ exports.shareDialog = function(){
 
 exports.doneLoadingNewProject = function(newProjectId){
   var url = '/programs/'+newProjectId;
-
   var message = "<h2>Congratulations!</h2><p>Your new app can be found online at:<br><a href='"+url+"'>"+url+"</a>";
   stopLoading(message);
 }

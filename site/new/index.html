@@ -71,20 +71,29 @@
     
     </menu>
     
- <div class="modal hide fade" id="shareDialog">
-        <div class="modal-header">
-          <h3>Share this Project!</h3>
+        <div class="modal hide fade" id="shareDialog">
+          <div class="modal-header">
+            <h3>Share this Project</h3>
+          </div>
+          <input type="text" class="form-control" id="projectTitleField" placeholder="Name this Project!"><br>
+          <textarea class="form-control" id="projectDescriptionField" placeholder="Describe your new project!"></textarea>
+          
+        <!-- 
+        Currently unneccessary question, as HTMl exporting is not yet created:
+          <div class="question">
+            How would you like to share this?<br>
+            <div class="btn-group">
+            <button class="btn btn-selected" id="shareBlocks">As Blocks</button>
+            <button class="btn"  id="shareResult" disabled="true">As Result (Eventually)</button>
+          </div> 
         </div>
+      -->
 
-        <div class="question">
-          How would you like to share this?<br>
-          <button class="btn" id="shareBlocks">As Blocks</button>
-          <button class="btn"  id="shareResult" disabled="true">As Result (Eventually)</button>
-        </div>
 
         <img src="../img/broc.gif" id="shareLoading" style="display:none"><br>
 
         <div class="modal-footer">
+          <button class="btn btn-primary" id="shareProjectButton">Share</button>
           <button class="btn" data-dismiss="modal"  id="cancel">Cancel</button>
         </div>
       </div>

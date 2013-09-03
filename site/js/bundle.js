@@ -34,7 +34,7 @@ module.exports = function(){
     modal.shareDialog();
   });
 
-  $(window.parent.document).find('#shareBlocks').on('click', function(e){
+  $(window.parent.document).find('#shareProjectButton').on('click', function(e){
     console.log("Editable clicked.");
     e.preventDefault();
 
@@ -44,9 +44,13 @@ module.exports = function(){
 
      //Blockly XML:
     var blocklyXml = window.Blockly.Xml.domToText(window.Blockly.Xml.workspaceToDom(window.Blockly.mainWorkspace));
+    var title = $(window.parent.document).find('#projectTitleField').val();
+    var description = $(window.parent.document).find('#projectDescriptionField').val();
 
     var postData = {
       'code':blocklyXml,
+      'title': title,
+      'description': description,
       'createdAt': Date.now(),
       'author': window.currentUser || 'anon',
       'scripts': window.bloccoliExtensions
@@ -121,7 +125,6 @@ exports.shareDialog = function(){
 
 exports.doneLoadingNewProject = function(newProjectId){
   var url = '/programs/'+newProjectId;
-
   var message = "<h2>Congratulations!</h2><p>Your new app can be found online at:<br><a href='"+url+"'>"+url+"</a>";
   stopLoading(message);
 }

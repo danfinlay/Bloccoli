@@ -1,7 +1,7 @@
 var hyperspace = require('../node_modules/hyperspace');
 var fs = require('fs');
-var templateHtml = fs.readFileSync(__dirname+ '/../site/template.html');
-var entryHtml = fs.readFileSync(__dirname+ '/../site/browse/entry.html')
+// var templateHtml = fs.readFileSync(__dirname+ '/../site/template.html');
+// var entryHtml = fs.readFileSync(__dirname+ '/../site/browse/entry.html')
 
 module.exports = function(req, res){
 

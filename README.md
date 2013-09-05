@@ -4,7 +4,7 @@
 ###Very Much in Beta.  No Saves are Sacred.
 
 ####[Follow us on Twitter](https://twitter.com/Bloccoli)
-####Live instance running [here](http://bloccoli.herokuapp.com/)
+####Live instance running [here](http://bloccoli.org/)
 
 Building on my thoughts from [this post](https://github.com/flyswatter/Blockly-Brainstorming).
 

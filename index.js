@@ -14,7 +14,7 @@ var projectPostHandler = require('./routes/projectPostHandler.js');
 var programHandler = require('./routes/programHandler.js');
 var browseHandler = require('./routes/browseHandler.js');
 
-var port = process.env.PORT || 8082;
+var port = process.env.PORT || 80;
 console.log("Starting up on port "+port);
 
 //For a point when we might switch to encrypted connections.

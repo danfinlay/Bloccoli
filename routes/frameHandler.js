@@ -16,7 +16,7 @@ module.exports = function(req, res){
   var queries = parsedReq.query;
   var path = parsedReq.pathname.split('/');
 
-
+  //Is automatically OK because worst case scenerio there are no modules loaded, will inject such an alert if that's the case.
   res.writeHead(200);
   res.write(frame[0]);
 
@@ -61,7 +61,7 @@ function generateProgramInjectionFrom(program){
   console.log("Program stringified: "+JSON.stringify(program));
 
   var xmlArray = program.xml.split('\n');
-  var scripts = program.scripts;
+  var scripts = program.scripts && program.scripts > 0 ? program.scripts : [];
 
   //Browser instructions:
   var instructions = '<script>';

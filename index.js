@@ -72,8 +72,8 @@ http.createServer(function(req, res){
     }else if(path[1] === 'programs' && path[3] !== 'frame.html'){
       ecstatic({root: __dirname+'/site/new', baseDir:'programs', handleError:false})(req, res);
 
-    }else if(path[1] === 'browse'){
-      browseHandler(req, res);
+    // }else if(path[1] === 'browse'){
+    //   browseHandler(req, res);
 
     }else{
       ecstatic({root: __dirname+'/site', handleError:false})(req, res);

@@ -8,13 +8,14 @@ var trumpet = require('trumpet');
 var _ = require('underscore');
 var domain = require('domain');
 
+
 //Route handlers:
 var blocklyFrameHandler = require('./routes/frameHandler.js');
 var projectPostHandler = require('./routes/projectPostHandler.js');
 var programHandler = require('./routes/programHandler.js');
 var browseHandler = require('./routes/browseHandler.js');
 
-var port = process.env.PORT || 80;
+var port = process.env.PORT || require('./lib/defaultPort')();
 console.log("Starting up on port "+port);
 
 //For a point when we might switch to encrypted connections.

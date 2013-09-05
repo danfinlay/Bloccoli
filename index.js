@@ -12,6 +12,7 @@ var domain = require('domain');
 var blocklyFrameHandler = require('./routes/frameHandler.js');
 var projectPostHandler = require('./routes/projectPostHandler.js');
 var programHandler = require('./routes/programHandler.js');
+var browseHandler = require('./routes/browseHandler.js');
 
 var port = process.env.PORT || 8082;
 console.log("Starting up on port "+port);
@@ -46,37 +47,34 @@ http.createServer(function(req, res){
     }
   });
 
+  //Run server within domain:
   d.run(function(){
 
     var parsedReq = url.parse(req.url,true);
     var path = parsedReq.pathname.split('/');
-    // console.log("Requested with path: "+JSON.stringify(path));
 
     //When blockly iframe is requested, inject requested module scripts:
     if(path[1] === 'frame.html'){
-
       blocklyFrameHandler(req, res);
 
     //Otherwise, route to static assets:
     }else if(path[1] === 'newProgram' && req.method === 'POST'){
-
       projectPostHandler(req, res);
 
     }else if(path[1] === 'programs' && path[3] === 'frame.html'){
-
       programHandler(req, res);
 
     }else if(path[1] === 'programs' && !path[3]){
-
       res.writeHead(200);
       fs.createReadStream(__dirname+'/site/new/index.html').pipe(res);
 
     }else if(path[1] === 'programs' && path[3] !== 'frame.html'){
-
       ecstatic({root: __dirname+'/site/new', baseDir:'programs', handleError:false})(req, res);
 
-    }else{
+    }else if(path[1] === 'browse'){
+      browseHandler(req, res);
 
+    }else{
       ecstatic({root: __dirname+'/site', handleError:false})(req, res);
 
     }

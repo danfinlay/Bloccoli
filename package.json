@@ -16,7 +16,8 @@
     "underscore": "~1.5.1",
     "generate-key": "0.0.6",
     "level": "~0.14.0",
-    "q": "~0.9.6"
+    "q": "~0.9.6",
+    "hyperspace": "~0.2.0"
   },
   "subdomain": "bloccoli",
   "engines": {

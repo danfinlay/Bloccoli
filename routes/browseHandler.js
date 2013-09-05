@@ -10,9 +10,9 @@ module.exports = function(req, res){
 
 }
 
-var entryRenderer = hyperspace(entryHtml, function(entryJson){
-  return {
-    '.entryTitle':"Substituted title!",
-    '.entryDescription':"Statically sbustittued description"
-  };
-})
+// var entryRenderer = hyperspace(entryHtml, function(entryJson){
+//   return {
+//     '.entryTitle':"Substituted title!",
+//     '.entryDescription':"Statically sbustittued description"
+//   };
+// })

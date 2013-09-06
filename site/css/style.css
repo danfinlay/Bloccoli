@@ -88,6 +88,12 @@ menu li img{
 .hero-unit a{
   color:#0A0;
 }
+
+#entryList{
+  background-color:#DDD;
+  border-radius:5px;
+  color:black;
+}
 /*.bottom-bar .span4{
   border-radius:8px;
   border:2px solid #4A4;

@@ -8,15 +8,15 @@
 
 Building on my thoughts from [this post](https://github.com/flyswatter/Blockly-Brainstorming).
 
-Allows new modules full of javascript-compiling blocks to be added to its projects.  Basic block importing is working.  Saving and sharing anonymous projects is working.  Major remaining tasks:
+Allows new modules full of javascript-compiling blocks to be added to its projects.  Basic block importing is working.  Saving and sharing anonymous projects is working.  Current roadmap, roughly in the order of my intentions:
 
-*  Always be adding interesting block modules.
+*  Adding a rough interface to browse and discover projects.
+
+*  Replace the "HTML" and "DOM" modules with a single "jQuery" one, basically wrap that whole library for the sake of DOM manipulation.
+
+*  Refactor.  I want to try out this RESTify, and it'll give me a good chance to break into a more structured MVC folder structure, so growing in the future will be less painful.
 
 *  Scope the modules' namespace!  Pass them a reference to the Blockly object, but keep them from having global scope, to avoid conflicts.
-
-*  Add project names and descriptions to saved programs.
-
-*  Create interface for exploring saved block projects.
 
 *  Implement User Accounts
 

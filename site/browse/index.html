@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <title>Bloccoli: Browse Programs</title>
     <link href='http://fonts.googleapis.com/css?family=Mouse+Memoirs' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-     </script>
-    <script>
-      function blocklyLoaded(blockly) {
-        // Called once Blockly is fully loaded.
-        window.Blockly = blockly;
-      }
-    </script>
+    <script src="/js/jquery.js"></script>
+
   </head>
 
   <body>
@@ -31,15 +27,6 @@
      </li>
      </a>
 
-    <a href="/browse">
-     <li>
-      <div>
-        Browse 
-        <img src="/img/browse-icon.png">
-      </div>
-     </li>
-     </a>
-
 
     <a href="http://github.com/flyswatter/Bloccoli" id="shareButton">
      <li>
@@ -52,53 +39,19 @@
 
     </menu>
 
-      <div class="modal hide fade" id="shareDialog">
-        <div class="modal-header">
-          <h3>Share this Project!</h3>
-        </div>
-        How would you prefer to share this?<br>
-        <button class="btn" >Editable</button>
-        <button class="btn" >View Only</button>
 
-        <div class="modal-footer">
-          <button class="btn" data-dismiss="modal"  id="cancel">Cancel</button>
-        </div>
-      </div>
-
-      <div class="container">
+      <div class="container" id="entryList">
         <div class="row fluid">
           <div class="span12">
-            <div class="hero-unit">
-              <img src="/img/logo-big.gif" style="float:left;width:30%; padding:15px"><h1>Build programs with blocks, or build new blocks.</h1>
-              <div class="lead">
-                
-                <strong>Bloccoli</strong> allows anyone to build web applications with visual building blocks.<br>
-                No blocks do what you want?  Browse for new ones, or post a request.<br>
-                If you know Javascript, you can <a href="https://github.com/flyswatter/Bloccoli#contributing-block-modules">design new blocks</a> and share them.
-              </div>
+            <h2>Browse User Programs</h2>
+            <span id="displayCount">Displaying x of y entries</span><br>
 
-            </div>
+            <div id="entries"></div>
+
           </div>
         </div>
-        <div class="row fluid bottom-bar">
-          <div class="span4">
-            <h3>Explore</h3>
-            Discover programs made by people using Bloccoli.<br><em>(Coming soon!)</em>
-          </div>
-          <div class="span4" align="center">
-            <h3>Expand</h3>
-            Find new block sets that can be added to any project.<br><em>(Coming soon!)</em>
-          </div>
-          <div class="span4" align="right">
-            <h3>Learn</h3>
-            Talk to other users about projects and programming with Bloccoli.<br><em>(Coming soon!)</em>
-          </div>
-        </div><br><br>
-        <center>
-          Created by <a href="http://danfinlay.com" style="color:#DFA">Dan Finlay</a></br>
-          Fork me on <a href="https://github.com/flyswatter/Bloccoli" style="color:#DFA">Github</a>
-        </center>
       </div>
+        
   </body>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -110,5 +63,5 @@
   ga('send', 'pageview');
 
 </script>
-
+<script src="./browse-bundle.js"></script>
 </html>

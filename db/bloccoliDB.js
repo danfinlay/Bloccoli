@@ -1,7 +1,6 @@
 var level = require('../node_modules/level');
 var util = require('util');
 var uniqueKey = require('./uniqueKeyGen');
-var Q = require('../node_modules/Q');
 
 module.exports = function BroccoliDB(name){
 
@@ -19,7 +18,7 @@ module.exports = function BroccoliDB(name){
 			})
 		})
 	}
-	
+
 	return db;
 
 }

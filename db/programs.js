@@ -85,18 +85,13 @@ function newAnonymousProgram(postedObject){
     description: limitedDescription
   }
 
-  mostRecent500Projects = [{
-    key: uniqueId,
-    date: startDate,
-    title: program.title,
-    description: program.description
-  }].concat(mostRecent500Projects);
-
   console.log("About to save program: "+JSON.stringify(program));
 
   putUnique(program).then(function(uniqueId){
 
     deferred.resolve(uniqueId);
+
+    
   }, function(reason){p
     deferred.reject(reason);
   });

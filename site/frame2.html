@@ -31,8 +31,10 @@
 
         if(newProgram) {
           //Currently disabled localstorage method, creates problems when locally stored program has URL-encoded modules, to be addressed eventually:
-          // window.setTimeout(BlocklyStorage.restoreBlocks, 0);
+          // console.log("This is a new program.");
+          window.setTimeout(BlocklyStorage.restoreBlocks, 0);
         }else{
+          // console.log("Program is loaded.");
           var domXml = Blockly.Xml.textToDom(uglyXml);
           Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, domXml);
         }

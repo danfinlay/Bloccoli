@@ -5,7 +5,6 @@ window.currentUser = null;
 
 module.exports = function(){
 
-  BlocklyStorage.backupOnUnload();
 
   //Add Blocks Button:
   $(window.parent.document).find('#addBlocksButton').on('click', function(e){
@@ -20,8 +19,10 @@ module.exports = function(){
     var code = window.Blockly.Generator.workspaceToCode('JavaScript');
     var generatedPage = pageGen(code);
     window.parent.subFrameFromHtml(generatedPage);
-    // BlocklyStorage.link()
 
+            // document.getElementById('blocklyFrame').contentWindow.BlocklyStorage.link();
+
+            BlocklyStorage.link();
   });
 
   //Share Button:

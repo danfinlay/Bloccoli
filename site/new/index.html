@@ -4,7 +4,9 @@
     <link href='http://fonts.googleapis.com/css?family=Mouse+Memoirs' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-     </script>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script src="/js/lodash.js"></script>
+
     <script>
       function blocklyLoaded(blockly) {
         // Called once Blockly is fully loaded.
@@ -77,19 +79,6 @@
           </div>
           <input type="text" class="form-control" id="projectTitleField" placeholder="Name this Project!"><br>
           <textarea class="form-control" id="projectDescriptionField" placeholder="Describe your new project!"></textarea>
-          
-          
-        <!-- 
-        Currently unneccessary question, as HTMl exporting is not yet created:
-          <div class="question">
-            How would you like to share this?<br>
-            <div class="btn-group">
-            <button class="btn btn-selected" id="shareBlocks">As Blocks</button>
-            <button class="btn"  id="shareResult" disabled="true">As Result (Eventually)</button>
-          </div> 
-        </div>
-      -->
-
 
         <img src="../img/broc.gif" id="shareLoading" style="display:none"><br>
 
@@ -98,6 +87,10 @@
           <button class="btn" data-dismiss="modal"  id="cancel">Cancel</button>
         </div>
       </div>
+
+    <iframe id = "blocklyFrame"></iframe>
+
+    <iframe id = "runFrame"></iframe>
 
     <script>
 
@@ -134,23 +127,36 @@
       }
 
       var urlVars = getUrlVars();
-      var frameUrl = '../frame.html';
 
+      function refreshToolboxWith(tools){
+        var requestToolbox = _.map(tools, function(fullModule){
+          return fullModule.name;
+        });
 
-      if(blocklyToolbox.length > 0){
-        frameUrl+='?bloccoliExtensions='+escape(JSON.stringify(blocklyToolbox));
+        //Adding a random header to prevent caching of the frame:
+        var randomHeader = '#'+Math.ceil(Math.random()*5000);
+        // var blocklyFrame = document.getElementById('blocklyFrame');
+        // blocklyFrame.src = '../frame.html'+randomHeader;
+        // blocklyFrame.reload=true;
+
+        $.ajax({
+          type: "GET", 
+          url: "../frame.html"+randomHeader,
+          beforeSend: function(xhr, settings){
+            xhr.setRequestHeader("X-BloccoliExtensions", escape(JSON.stringify(requestToolbox)));
+          },
+          success: function(data){
+            var $blocklyFrame = $("#blocklyFrame");
+            $blocklyFrame.attr('src',"../frame.html"+randomHeader);
+            $blocklyFrame.find('html').html(data); 
+          }
+        });
       }
 
-      // console.log("Iframe requesting with: "+frameUrl);
-      var iframe = document.createElement('IFRAME');
-      iframe.setAttribute('src', frameUrl);
-      iframe.setAttribute('id', 'blocklyFrame');
-      document.body.appendChild(iframe);
+      refreshToolboxWith(blocklyToolbox);
 
     </script>
 
-    <iframe id = "runFrame">
-    </iframe>
   </body>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -15,32 +15,20 @@ module.exports = function(req, res){
   res.writeHead(200);
   res.write(frame[0]);
 
-  var extensionHeaders;
-  try{
-    extensionHeaders = JSON.parse(unescape(req.headers['x-bloccoliextensions']));
-    console.log("Headers retrieved: "+unescape(req.headers['x-bloccoliextensions']));
-    for(var i = 0; i < extensionHeaders.length; i++){
-      var scriptTag = '<script src="./blocks/'+extensionHeaders[i]+'.js"></script>';
-      console.log("Script tag: "+scriptTag);
-      res.write(scriptTag);
-    }
-  }
-  catch(er){
-    extensionHeaders = [];
-  }
-
   var parsedReq = url.parse(req.url,true);
   var queries = parsedReq.query;
   var path = parsedReq.pathname.split('/');
 
+
   //Inject saved program if referred to in referrer's address:
   var referrer = req.headers['referer'];
 
-  var extensions;
-  var refParsedReq = url.parse(referrer,true);
-  extensions = refParsedReq.query.bloccoliExtensions ? JSON.parse(refParsedReq.query.bloccoliExtensions) : [];
-  extensions.concat(extensionHeaders);
+  //Get query from extensions
+  var extensionHeaders;
+  // var refParsedReq = url.parse(referrer,true);
+  extensionHeaders = queries.bloccoliExtensions ? JSON.parse(queries.bloccoliExtensions) : [];
 
+  console.log("Frame handler received: "+JSON.stringify(extensionHeaders));
 
   //If this frame is behind /programs/, there is some extra saved data to inject into it, and it "shouldLoad" those.
   var slicedRef = referrer.split('/');
@@ -68,8 +56,8 @@ module.exports = function(req, res){
   //Otherwise, just load the page with queried extensions as usual:
   }else{
 
-    for(var i = 0; i < extensions.length; i++){
-      res.write('<script src="./blocks/'+extensions[i]+'.js"></script>');
+    for(var i = 0; i < extensionHeaders.length; i++){
+      res.write('<script src="./blocks/'+extensionHeaders[i]+'.js"></script>');
     }
     res.end(frame[1]);
   

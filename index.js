@@ -51,11 +51,13 @@ http.createServer(function(req, res){
   //Run server within domain:
   d.run(function(){
 
+    console.log("URL requested: "+req.url);
+
     var parsedReq = url.parse(req.url,true);
     var path = parsedReq.pathname.split('/');
 
     //When blockly iframe is requested, inject requested module scripts:
-    if(path[1] === 'frame.html'){
+    if(path[1].split('?')[0] === 'frame.html'){
       blocklyFrameHandler(req, res);
 
     //Otherwise, route to static assets:

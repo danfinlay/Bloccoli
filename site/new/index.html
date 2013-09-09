@@ -109,53 +109,47 @@
 
     //JSON representation:
     var blocklyToolbox = [];
+    console.log("Page loaded with toolbox of: ", blocklyToolbox);
     //XML Prepared for Blockly:
     var blocklyXMLToolbox = '';
 
-      function getUrlVars()
-      {
-          var vars = [], hash;
-          var source = window.location.href;
-          var hashes = source.slice(source.indexOf('?') + 1).split('&');
-          for(var i = 0; i < hashes.length; i++)
-          {
-              hash = hashes[i].split('=');
-              vars.push(hash[0]);
-              vars[hash[0]] = hash[1];
-          }
-          return vars;
-      }
+    function getUrlVars()
+    {
+        var vars = [], hash;
+        var source = window.location.href;
+        var hashes = source.slice(source.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
 
-      var urlVars = getUrlVars();
+    var urlVars = getUrlVars();
 
-      function refreshToolboxWith(tools){
-        var requestToolbox = _.map(tools, function(fullModule){
-          return fullModule.name;
-        });
+    function refreshToolboxWith(tools){
+      var requestToolbox = _.uniq(_.map(tools, function(fullModule){
+        return fullModule.name.toLowerCase();
+      }));
 
-        //Adding a random header to prevent caching of the frame:
-        var randomHeader = '#'+Math.ceil(Math.random()*5000);
-        // var blocklyFrame = document.getElementById('blocklyFrame');
-        // blocklyFrame.src = '../frame.html'+randomHeader;
-        // blocklyFrame.reload=true;
+      console.log("Tools updated to: ", blocklyToolbox);
 
-        $.ajax({
-          type: "GET", 
-          url: "../frame.html"+randomHeader,
-          beforeSend: function(xhr, settings){
-            xhr.setRequestHeader("X-BloccoliExtensions", escape(JSON.stringify(requestToolbox)));
-          },
-          success: function(data){
-            var $blocklyFrame = $("#blocklyFrame");
-            $blocklyFrame.attr('src',"../frame.html"+randomHeader);
-            $blocklyFrame.find('html').html(data); 
-          }
-        });
-      }
+      var $blocklyFrame = $("#blocklyFrame");
 
-      refreshToolboxWith(blocklyToolbox);
 
-    </script>
+      $blocklyFrame.attr('src',"../frame.html?bloccoliExtensions="+escape(JSON.stringify(requestToolbox)));
+
+
+      var old_element = document.getElementById("blocklyFrame");
+      var new_element = old_element.cloneNode(true);
+      old_element.parentNode.replaceChild(new_element, old_element);
+    }
+
+    refreshToolboxWith(blocklyToolbox);
+
+  </script>
 
   </body>
 <script>

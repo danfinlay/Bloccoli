@@ -148,11 +148,13 @@
         firstBloccoliExtensionLoad = false;
       }
 
+      // BlocklyStorage.link();
+
       $blocklyFrame.attr('src', frameUrl);
 
-      var old_element = document.getElementById("blocklyFrame");
-      var new_element = old_element.cloneNode(true);
-      old_element.parentNode.replaceChild(new_element, old_element);
+      // var old_element = document.getElementById("blocklyFrame");
+      // var new_element = old_element.cloneNode(true);
+      // old_element.parentNode.replaceChild(new_element, old_element);
     }
 
     refreshToolboxWith(blocklyToolbox);

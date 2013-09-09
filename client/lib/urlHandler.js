@@ -40,12 +40,13 @@ function getUrlVars()
 function reloadPageWithExtension(newExtensionUrl){
 
   window.parent.blocklyToolbox.push({name:newExtensionUrl});
-  var requestTools = [];
+  var requestTools = 
   for(var i = 0, iLen = window.parent.blocklyToolbox.length; i < iLen; i++){
     if(!_.contains(defaults, window.parent.blocklyToolbox[i].name)){
       requestTools.push(window.parent.blocklyToolbox[i]);
     }
   }
+  BlocklyStorage.link();
   window.parent.refreshToolboxWith(requestTools);
 
 }

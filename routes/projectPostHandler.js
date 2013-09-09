@@ -6,7 +6,7 @@ var programDB = programs();
 var recentPosters = {};
 
 module.exports = function(req, res){
-  console.log("Posting attempted...");
+  // console.log("Posting attempted...");
 
   var postReceivedTime = Date.now();
 
@@ -25,14 +25,14 @@ module.exports = function(req, res){
       var path = parsedReq.pathname.split('/');
       var postBody = qs.parse(body);
       var parsed = JSON.parse(body);
-      console.log("New program post attempted: "+JSON.stringify(parsedReq));
+      // console.log("New program post attempted: "+JSON.stringify(parsedReq));
 
-      console.log("Body result: "+JSON.stringify(parsed, null, '\t'));
-      console.log("Code result: "+parsed.code);
+      // console.log("Body result: "+JSON.stringify(parsed, null, '\t'));
+      // console.log("Code result: "+parsed.code);
 
       programDB.newAnonymousProgram(parsed).then(function(programId){
 
-        console.log("New program added: "+programId+" in just "+(Date.now()-postReceivedTime) +' miliseconds.');
+        // console.log("New program added: "+programId+" in just "+(Date.now()-postReceivedTime) +' miliseconds.');
         res.writeHead(200);
         res.end(JSON.stringify({uniqueId: programId}));
 
@@ -49,7 +49,6 @@ module.exports = function(req, res){
   } else {
 
   }
-
 }
 
 function notFlooding(ip){

@@ -2,6 +2,17 @@ var pageGen = require('./pageGenerator');
 var request = require('browser-request');
 var modal = require('./modal');
 window.currentUser = null;
+var _ = require('../node_modules/lodash');
+
+
+var defaults = ['logic', 'loops', 'math', 'text', 'lists', 'color', 'variables', 'functions'];
+function extensionsList(){
+  console.log("Creating a unique list");
+  return requestToolbox = _.uniq(_.map(window.parent.blocklyToolbox, function(fullModule){
+    if(!_.contains(defaults, fullModule.name.toLowerCase()));
+      return fullModule.name.toLowerCase();
+  }));
+}
 
 module.exports = function(){
 
@@ -50,7 +61,7 @@ module.exports = function(){
       'description': description,
       'createdAt': Date.now(),
       'author': window.currentUser || 'anon',
-      'scripts': window.bloccoliExtensions
+      'scripts': extensionsList()
     }
 
     console.log("Attempting to post project..");
@@ -83,7 +94,7 @@ module.exports = function(){
       'code':code,
       'createdAt': Date.now(),
       'author': window.currentUser || 'anon',
-      'scripts': window.bloccoliExtensions
+      'scripts': extensionsList()
     }
 
     console.log("Attempting to post compiled project..");

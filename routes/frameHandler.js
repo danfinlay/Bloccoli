@@ -9,6 +9,7 @@ var frame = [
   fs.readFileSync('./site/frame2.html')
 ];
 
+
 module.exports = function(req, res){
 
   //Is automatically OK because worst case scenerio there are no modules loaded, will inject such an alert if that's the case.
@@ -25,23 +26,25 @@ module.exports = function(req, res){
 
   //Get query from extensions
   var extensionHeaders;
-  // var refParsedReq = url.parse(referrer,true);
+  var refParsedReq = url.parse(referrer,true);
   extensionHeaders = queries.bloccoliExtensions ? JSON.parse(queries.bloccoliExtensions) : [];
+  console.log("Extension headers gave: "+JSON.stringify(extensionHeaders));
 
-  // console.log("Frame handler received: "+JSON.stringify(extensionHeaders));
+  console.log("Frame handler received: "+JSON.stringify(extensionHeaders));
 
-  //If this frame is behind /programs/, there is some extra saved data to inject into it, and it "shouldLoad" those.
+  //If this frame is behind /programs/ and received no headers, there is some extra saved data to inject into it, and it "shouldLoad" those.
   var slicedRef = referrer.split('/');
-  var shouldLoad = slicedRef[slicedRef.length-2] === 'programs' ? true : false;
+  var shouldLoad = slicedRef[slicedRef.length-2] === 'programs' && extensionHeaders.length === 0 ? true : false;
   if(shouldLoad){
 
     var programCode = slicedRef[slicedRef.length-1];;
-    // console.log("Program requested: "+programCode);
+    console.log("Program code parsed: "+programCode);
 
     programs.get(programCode).then(function(program){
-      // console.log("Program got, with scripts: "+JSON.stringify(program));
+      // console.log("Program got: "+JSON.stringify(program));
+      // console.log("With scripts: "+JSON.stringify(program.scripts));
 
-      if(program.scripts && program.sripts > 0){
+      if(program.scripts && program.scripts.length > 0){
         for(var i = 0; i < program.scripts.length; i++){
           res.write('<script src="./blocks/'+program.scripts[i]+'.js"></script>');
         }
@@ -56,6 +59,8 @@ module.exports = function(req, res){
   //Otherwise, just load the page with queried extensions as usual:
   }else{
 
+    //This is not a default program's scripts, let's load from the headers:
+    console.log("Not default, loading scritps: "+JSON.stringify(extensionHeaders));
     for(var i = 0; i < extensionHeaders.length; i++){
       res.write('<script src="./blocks/'+extensionHeaders[i]+'.js"></script>');
     }

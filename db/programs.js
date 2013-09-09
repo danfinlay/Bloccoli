@@ -10,9 +10,9 @@ function refreshMostRecent(){
   var unsorted = [];
   db.createReadStream()
   .on('data', function(data){
-    console.log("Received: "+JSON.stringify(data));
+    // console.log("Received: "+JSON.stringify(data));
     var parsedValue = data.value;
-    console.log("parsedValue is a "+typeof parsedValue );
+    // console.log("parsedValue is a "+typeof parsedValue );
     if(parsedValue && parsedValue.xml){  
       unsorted.push({
         key: data.key,
@@ -23,7 +23,7 @@ function refreshMostRecent(){
     }
   })
   .on('end', function(){
-    console.log('' + unsorted.length + " programs identified");
+    // console.log('' + unsorted.length + " programs identified");
     var sorted = unsorted.sort(function(a,b){
       return b.date - a.date;
     });
@@ -49,7 +49,7 @@ function promiseMeProgramsFromTo(from, to){
     }
   }
 
-  console.log("Making batch with: "+JSON.stringify(ops));
+  // console.log("Making batch with: "+JSON.stringify(ops));
   db.batch(ops, function(er, programs){
     if(er){
       deferred.reject(er);
@@ -72,7 +72,7 @@ function newAnonymousProgram(postedObject){
 
   var deferred = Q.defer();
 
-  console.log("Creating program from posted object: "+JSON.stringify(postedObject));
+  // console.log("Creating program from posted object: "+JSON.stringify(postedObject));
 
   var limitedDescription = postedObject.description.length > 500 ? postedObject.description.substring(0,500) : postedObject.description;
   var startDate = Date.now();
@@ -85,7 +85,7 @@ function newAnonymousProgram(postedObject){
     description: limitedDescription
   }
 
-  console.log("About to save program: "+JSON.stringify(program));
+  // console.log("About to save program: "+JSON.stringify(program));
 
   putUnique(program).then(function(uniqueId){
 

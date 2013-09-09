@@ -19,7 +19,7 @@ function UrlHandler(){
 
 }
 
-var defaults = ["Logic", "Loops", "Math", "Text", "Lists", "Color", "Variables", "Functions"];
+var defaults = ["logic", "loops", "math", "text", "lists", "color", "variables", "functions"];
 // UrlHandler.prototype.getUrlVars = getUrlVars;
 
 

@@ -128,19 +128,27 @@
     }
 
     var urlVars = getUrlVars();
+    var firstBloccoliExtensionLoad = true;
 
     function refreshToolboxWith(tools){
-      var requestToolbox = _.uniq(_.map(tools, function(fullModule){
-        return fullModule.name.toLowerCase();
-      }));
-
-      console.log("Tools updated to: ", blocklyToolbox);
 
       var $blocklyFrame = $("#blocklyFrame");
 
+      var frameUrl = "../frame.html";
 
-      $blocklyFrame.attr('src',"../frame.html?bloccoliExtensions="+escape(JSON.stringify(requestToolbox)));
+      //If new tools have been added, add a header to request those tools instead of defaults:
+      if(!firstBloccoliExtensionLoad){
+        var requestToolbox = _.uniq(_.map(tools, function(fullModule){
+          return fullModule.name.toLowerCase();
+        }));
 
+        console.log("Tools updated to: ", blocklyToolbox);
+        frameUrl += "?bloccoliExtensions="+escape(JSON.stringify(requestToolbox));
+      }else{
+        firstBloccoliExtensionLoad = false;
+      }
+
+      $blocklyFrame.attr('src', frameUrl);
 
       var old_element = document.getElementById("blocklyFrame");
       var new_element = old_element.cloneNode(true);

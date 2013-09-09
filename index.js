@@ -51,7 +51,7 @@ http.createServer(function(req, res){
   //Run server within domain:
   d.run(function(){
 
-    console.log("URL requested: "+req.url);
+    // console.log("URL requested: "+req.url);
 
     var parsedReq = url.parse(req.url,true);
     var path = parsedReq.pathname.split('/');

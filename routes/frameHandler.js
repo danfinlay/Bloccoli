@@ -28,7 +28,7 @@ module.exports = function(req, res){
   // var refParsedReq = url.parse(referrer,true);
   extensionHeaders = queries.bloccoliExtensions ? JSON.parse(queries.bloccoliExtensions) : [];
 
-  console.log("Frame handler received: "+JSON.stringify(extensionHeaders));
+  // console.log("Frame handler received: "+JSON.stringify(extensionHeaders));
 
   //If this frame is behind /programs/, there is some extra saved data to inject into it, and it "shouldLoad" those.
   var slicedRef = referrer.split('/');

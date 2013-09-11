@@ -217,6 +217,7 @@ function reloadPageWithExtension(newExtensionUrl){
       requestTools.push(window.parent.blocklyToolbox[i]);
     }
   }
+  BlocklyStorage.link();
   window.parent.refreshToolboxWith(requestTools);
 
 }

@@ -11,6 +11,7 @@
           }
           newXml += '</category>';
         }
+        newXml += extensionXml;
         newXml += '</xml>';
         window.parent.blocklyXMLToolbox = newXml;
         return newXml;

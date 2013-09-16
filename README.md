@@ -20,22 +20,31 @@ Allows new modules full of javascript-compiling blocks to be added to its projec
 
 *  Implement User Accounts
 
-*  Allow user block module submitting (javascript sanitization server-side by Caja).
+*  Allow automated user block module submitting (Planning on javascript sanitization server-side by Caja).
 
 -
 Currently, "dom" and "html" are the only valid modules, and they are minimal and demo-ish.But the premise is simple!  New blocks can be added surprisingly easily!
 
 ##Contributing Block Modules
 
-If you'd like to add modules to Bloccoli, simply add them to the ./site/blocks folder.
+If you'd like to add modules to Bloccoli, simply add them to the ./site/blocks folder, and send me a pull request.  If there's lots of interest in contributing, I may automate this process in the future.
 
 Follow the [dom.js format](https://github.com/flyswatter/Bloccoli/blob/master/site/blocks/dom.js) for success.  Note there are three steps:
 
-Add a simple object representation of your module name and block names to the `window.parent.blocklyToolbox` list [as seen here](https://github.com/flyswatter/Bloccoli/blob/master/site/blocks/dom.js#L1).
+###1. A representation of your menu tree.
 
-After that, the remaining calls perfectly match what you'd do using Blockly's [block factory](http://blockly-demo.appspot.com/static/apps/blockfactory/index.html), so you'd ought to get familiar with it if you want to contribute.  Basically the block factory will give you both the block definition and the javascript compiling template to build the block and its Javascript definition.
+If you have a flat block menu, you may find it easiest to arrange it as a javascript object as shown here, adding it to the global `blocklyToolbox` [as seen here](https://github.com/flyswatter/Bloccoli/blob/master/site/blocks/dom.js#L1).
 
-Yes!  You can make the blocks do almost anything Javscript can do!  Sanitization of Javascript calls to avoid improper use of cookies, etc coming soon!
+If you need a more complex menu system, for example, categories within categories, you may append your required XML in [the blockly format](https://code.google.com/p/blockly/wiki/Toolbox) to the global `extensionXml` string.
+
+If your menu system is so complex that it contains multiple categories, you may wnat to use this module: https://github.com/flyswatter/Blockly-Module-Maker
+
+###2. Define the shape and behavior of each block.
+###3. Define the compilation of these blocks into Javascript.
+
+The remaining calls perfectly match what you'd do using Blockly's [block factory](http://blockly-demo.appspot.com/static/apps/blockfactory/index.html), so you'd ought to get familiar with it if you want to contribute.  Basically the block factory will give you both the block definition and the javascript compiling template to build the block and its Javascript definition.
+
+Yes!  You can make the blocks do almost anything Javscript can do!  If you need a kick start, you can look at how some previous block modules were made in the `site/blocks` subdirectory.
 
 ####Future Block Module Hopes:
 *More complete website interaction

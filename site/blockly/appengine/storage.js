@@ -63,7 +63,7 @@ BlocklyStorage.restoreBlocks = function() {
 BlocklyStorage.link = function() {
   var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
   var data = Blockly.Xml.domToText(xml);
-  BlocklyStorage.makeRequest_('/storage', 'xml', data);
+  // BlocklyStorage.makeRequest_('/storage', 'xml', data);
 };
 
 /**
@@ -72,7 +72,7 @@ BlocklyStorage.link = function() {
  */
 BlocklyStorage.retrieveXml = function(key) {
   var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-  BlocklyStorage.makeRequest_('/storage', 'key', key);
+  // BlocklyStorage.makeRequest_('/storage', 'key', key);
 };
 
 /**
@@ -89,20 +89,20 @@ BlocklyStorage.httpRequest_ = null;
  * @param {string} content Content of parameter.
  * @private
  */
-BlocklyStorage.makeRequest_ = function(url, name, content) {
-  if (BlocklyStorage.httpRequest_) {
-    // AJAX call is in-flight.
-    BlocklyStorage.httpRequest_.abort();
-  }
-  BlocklyStorage.httpRequest_ = new XMLHttpRequest();
-  BlocklyStorage.httpRequest_.name = name;
-  BlocklyStorage.httpRequest_.onreadystatechange =
-      BlocklyStorage.handleRequest_;
-  BlocklyStorage.httpRequest_.open('POST', url);
-  BlocklyStorage.httpRequest_.setRequestHeader('Content-Type',
-      'application/x-www-form-urlencoded');
-  BlocklyStorage.httpRequest_.send(name + '=' + encodeURIComponent(content));
-};
+// BlocklyStorage.makeRequest_ = function(url, name, content) {
+  // if (BlocklyStorage.httpRequest_) {
+  //   // AJAX call is in-flight.
+  //   BlocklyStorage.httpRequest_.abort();
+  // }
+  // BlocklyStorage.httpRequest_ = new XMLHttpRequest();
+  // BlocklyStorage.httpRequest_.name = name;
+  // BlocklyStorage.httpRequest_.onreadystatechange =
+  //     BlocklyStorage.handleRequest_;
+  // BlocklyStorage.httpRequest_.open('POST', url);
+  // BlocklyStorage.httpRequest_.setRequestHeader('Content-Type',
+  //     'application/x-www-form-urlencoded');
+  // BlocklyStorage.httpRequest_.send(name + '=' + encodeURIComponent(content));
+// };
 
 /**
  * Callback function for AJAX call.
